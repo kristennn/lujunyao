@@ -12,51 +12,51 @@
 
 ActiveRecord::Schema.define(version: 2019_02_22_064027) do
 
-  create_table "commodities", force: :cascade do |t|
-    t.integer "commodity_code"
-    t.string "commodity_type_name"
-    t.integer "commodity_type_code"
-    t.string "name"
-    t.string "unit"
-    t.string "standart"
-    t.float "purchase_price"
-    t.float "selling_price"
+  create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.integer "commodity_code", comment: "商品编码"
+    t.string "commodity_type_name", comment: "商品种类名称"
+    t.integer "commodity_type_code", comment: "商品种类编码"
+    t.string "name", comment: "商品名称"
+    t.string "unit", comment: "计量单位"
+    t.string "standart", comment: "规格型号"
+    t.float "purchase_price", comment: "进货价格"
+    t.float "selling_price", comment: "销售价格"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "commodity_inventories", force: :cascade do |t|
+  create_table "commodity_inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.integer "commodity_id"
-    t.boolean "operate_type"
-    t.integer "quantity"
-    t.integer "current_inventory"
-    t.float "freight"
-    t.string "operator"
+    t.boolean "operate_type", comment: "出入库类型"
+    t.integer "quantity", comment: "数量"
+    t.integer "current_inventory", comment: "当前库存"
+    t.float "freight", comment: "运费"
+    t.string "operator", comment: "经办人"
     t.integer "year"
     t.integer "month"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "employees", force: :cascade do |t|
-    t.integer "job_number"
-    t.string "name"
-    t.boolean "sex"
-    t.string "birth_date"
-    t.integer "age"
-    t.string "working_date"
-    t.integer "working_years"
-    t.json "worktype"
-    t.json "duty"
-    t.json "department"
+  create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.integer "job_number", comment: "工号"
+    t.string "name", comment: "姓名"
+    t.boolean "sex", comment: "性别"
+    t.string "birth_date", comment: "出生日期"
+    t.integer "age", comment: "年龄"
+    t.string "working_date", comment: "工作日期"
+    t.integer "working_years", comment: "工龄"
+    t.json "worktype", comment: "工种"
+    t.json "duty", comment: "职务"
+    t.json "department", comment: "部门"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", force: :cascade do |t|
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
@@ -64,32 +64,32 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
-  create_table "trading_records", force: :cascade do |t|
+  create_table "trading_records", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.integer "commodity_id"
     t.integer "employee_id"
-    t.integer "quantity"
-    t.float "discount"
-    t.float "discount_price"
-    t.float "total_amount"
-    t.string "operator"
+    t.integer "quantity", comment: "数量"
+    t.float "discount", comment: "折扣"
+    t.float "discount_price", comment: "折扣后价格"
+    t.float "total_amount", comment: "总金额"
+    t.string "operator", comment: "经办人"
     t.integer "year"
     t.integer "month"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "update_events", force: :cascade do |t|
-    t.integer "event_id"
-    t.string "table_name"
-    t.string "field_name"
-    t.string "field_old_value"
-    t.string "field_new_value"
+  create_table "update_events", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.integer "event_id", comment: "事件id"
+    t.string "table_name", comment: "表格名称"
+    t.string "field_name", comment: "字段名称"
+    t.string "field_old_value", comment: "字段旧值"
+    t.string "field_new_value", comment: "字段新值"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "t", null: false
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.string "email", default: "1", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -107,23 +107,23 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "users_roles", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
+  create_table "users_roles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-  create_table "wages", force: :cascade do |t|
+  create_table "wages", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.integer "employee_id"
-    t.float "gross_salary"
-    t.float "gross_cash"
-    t.float "gross_virtual_money"
-    t.float "net_cash"
-    t.float "net_virtual_money"
-    t.float "accumulative_cash"
-    t.float "accumulative_virtual_money"
+    t.float "gross_salary", comment: "应发工资"
+    t.float "gross_cash", comment: "应发现金"
+    t.float "gross_virtual_money", comment: "应发易货币"
+    t.float "net_cash", comment: "实发现金"
+    t.float "net_virtual_money", comment: "实发易货币"
+    t.float "accumulative_cash", comment: "累计应发现金"
+    t.float "accumulative_virtual_money", comment: "累计应发易货币"
     t.integer "year"
     t.integer "month"
     t.datetime "created_at", null: false

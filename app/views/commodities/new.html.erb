@@ -1,0 +1,33 @@
+<div id="preloader">
+  <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+<div class="contentpanel">
+  <div class="panel panel-body">
+    <header style="text-align: center">
+      <h4>新增商品</h4>
+    </header>
+
+    <div class="content-body"> 
+      <div class="panel">
+        <div class="panel-heading" style="background-color: #fff;">
+          <span style="display:inline-block;">
+          </span>
+          <span style="float: right;"> 
+            <%= link_to("导入商品表", "#",class:"btn btn-primary-upload pull-right") %>
+            <%= link_to("新增商品", new_commodity_path,class:"btn btn-primary-upload pull-right") %>
+          </span>
+        </div>
+      </div>
+      <div class="content-table" style="clear:both;">
+        <%= simple_form_for :@commodity do |f| %>     
+          <%= f.input :name, label: "商品名称：" %>
+          <%= f.input :commodity_type_name, label: "商品类别：", as: :select, collection: [] %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+ </div>
+
+
+
+
