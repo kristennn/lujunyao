@@ -32,7 +32,7 @@
           <div class="col-md-5">
             <ul class="employee-list">
               <li>性别
-              <%= f.select :sex, options_for_select([["男", "0"], ["女", "1"]])%>
+              <%= f.select :sex, options_for_select(["男", "女"])%>
               </li>
               <li>工种
               <%= f.text_field :worktype %>

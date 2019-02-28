@@ -38,8 +38,7 @@
               <tr class="row-click-able" data-url="/employees/<%= employee.id%>">
                 <td><%= employee.name %></td>
                 <td><%= employee.job_number %></td>
-                <% sex_hash = {true => "女", false => "男"} %>
-                <td><%= sex_hash[employee.sex] %></td>
+                <td><%= employee.sex %></td>
                 <td><%= employee.age %></td>
                 <td><%= employee.working_years %></td>
                 <td><%= employee.worktype %></td>

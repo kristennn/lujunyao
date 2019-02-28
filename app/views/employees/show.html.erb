@@ -39,17 +39,11 @@
               "birth_date" => "出生日期", 
               "working_date" => "入职日期"
             } %>
-            <% sex_hash = {"true" => "女", "false" => "男"} %>
             <% @update_events.each do |event| %>
               <tr>
                 <td><%= field_name_transfer[event.field_name] %></td>
-                <% if event.field_name == "sex" %>
-                  <td><%= sex_hash[event.field_old_value] %></td>
-                  <td><%= sex_hash[event.field_new_value] %></td>
-                <% else %>
-                  <td><%= event.field_old_value %></td>
-                  <td><%= event.field_new_value %></td>
-                <% end %>
+                <td><%= event.field_old_value %></td>
+                <td><%= event.field_new_value %></td>
                 <td><%= event.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
               </tr>
             <% end %>
