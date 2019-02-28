@@ -1,33 +1,57 @@
-<div id="preloader">
-  <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
-</div>
 <div class="contentpanel">
-  <div class="panel panel-body">
-    <header style="text-align: center">
-      <h4>新增商品</h4>
-    </header>
+  <%= form_for @commodity do |f| %>
+    <div class="panel">
+      <div class="panel-body">
+        <%= link_to "返回", commodities_path,class:"btn btn-success-alt"%>
+        <div class="head-3fDND_0">
+          <div class="info-2zzSp_0" style="background: #F8F8F9">
+            <%= "商品基本信息"%>
+          </div>
+        </div>
 
-    <div class="content-body"> 
-      <div class="panel">
-        <div class="panel-heading" style="background-color: #fff;">
-          <span style="display:inline-block;">
-          </span>
-          <span style="float: right;"> 
-            <%= link_to("导入商品表", "#",class:"btn btn-primary-upload pull-right") %>
-            <%= link_to("新增商品", new_commodity_path,class:"btn btn-primary-upload pull-right") %>
-          </span>
+        <div class="row">
+          <div class="col-md-5">
+            <ul class="employee-list">
+              <li>
+                <span class="glyphicon glyphicon-asterisk"></span>
+                <span>商品名称</span>
+                <%= f.text_field :name, required: true %>
+              </li>
+              <li>商品种类名称
+              <%= f.text_field :commodity_type_name %>
+              </li>
+              
+              <li><span class="glyphicon glyphicon-asterisk"></span>计量单位
+              <%= f.select :unit, options_for_select(["箱", "盒", "个", "瓶"]), required: true %>
+              </li>
+              <li><span class="glyphicon glyphicon-asterisk"></span>进货价
+              <%= f.text_field :purchase_price, required: true %>
+              </li>  
+            </ul>
+          </div>
+          <div class="col-md-5">
+            <ul class="employee-list">
+              <li>商品编码
+              <%= f.text_field :commodity_code%>
+              </li>
+              <li>商品种类编码
+              <%= f.text_field :commodity_type_code %>
+              </li>
+              <li><span class="glyphicon glyphicon-asterisk"></span>规格型号
+              <%= f.text_field :standart, required: true %>
+              </li>
+              <li><span class="glyphicon glyphicon-asterisk"></span>销售价
+              <%= f.text_field :selling_price, required: true %>
+              </li> 
+            </ul>
+          </div>
+        </div> 
+        <div class="center-uRe1b_0">
+          <br><br><br><br><br>
+          <%= f.submit :确定新增, class:"btn button-success"%>
         </div>
       </div>
-      <div class="content-table" style="clear:both;">
-        <%= simple_form_for :@commodity do |f| %>     
-          <%= f.input :name, label: "商品名称：" %>
-          <%= f.input :commodity_type_name, label: "商品类别：", as: :select, collection: [] %>
-        <% end %>
-      </div>
     </div>
-  </div>
- </div>
-
-
-
+  <% end %>
+</div>
 
