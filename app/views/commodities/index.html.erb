@@ -45,7 +45,7 @@
                 <td><%= commodity.purchase_price %></td>
                 <td><%= commodity.selling_price %></td>
                 <td>
-                  <%= link_to("修改", "#",class:"btn btn-primary btn-xs") %>
+                  <%= link_to("修改", edit_commodity_path(commodity.id),class:"btn btn-primary btn-xs") %>
                 </td>
               </tr>
             <% end %>

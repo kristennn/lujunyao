@@ -13,6 +13,10 @@ class CommoditiesController < ApplicationController
     @commodity = Commodity.find(params[:id])
   end
 
+  def edit
+    @commodity = Commodity.find(params[:id])
+  end
+
   def create
     commodity = Commodity.find_by(name: params[:name])
     if commodity.present?
@@ -22,6 +26,13 @@ class CommoditiesController < ApplicationController
       @commodity.save!
       flash[:notice] = "新增成功"
     end
+    redirect_to commodities_path
+  end
+
+  def update
+    @commodity = Commodity.find(params[:id])
+    @commodity.update(commodity_params)
+    flash[:notice] = "修改成功"
     redirect_to commodities_path
   end
 
