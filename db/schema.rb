@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_02_22_064027) do
 
-  create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_code", comment: "商品编码"
     t.string "commodity_type_name", comment: "商品种类名称"
     t.integer "commodity_type_code", comment: "商品种类编码"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "commodity_inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "commodity_inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_id"
     t.boolean "operate_type", comment: "出入库类型"
     t.integer "quantity", comment: "数量"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "job_number", comment: "工号"
     t.string "name", comment: "姓名"
     t.boolean "sex", comment: "性别"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
     t.bigint "resource_id"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
-  create_table "trading_records", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "trading_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_id"
     t.integer "employee_id"
     t.integer "quantity", comment: "数量"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "update_events", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "update_events", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "event_id", comment: "事件id"
     t.string "table_name", comment: "表格名称"
     t.string "field_name", comment: "字段名称"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email", default: "1", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "users_roles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "users_roles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 2019_02_22_064027) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
-  create_table "wages", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "wages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "employee_id"
     t.float "gross_salary", comment: "应发工资"
     t.float "gross_cash", comment: "应发现金"
