@@ -8,8 +8,12 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
   end
 
-  def new
+  def new 
     @employee = Employee.new
+  end
+
+  def edit
+    @employee = Employee.find(params[:id])
   end
 
   def create
@@ -21,6 +25,13 @@ class EmployeesController < ApplicationController
       @employee.save
       flash[:notice] = "新增成功"
     end
+    redirect_to employees_path
+  end
+
+  def update
+    @employee = Employee.find(params[:id])
+    @employee.update(employee_params)
+    flash[:notice] = "修改成功"
     redirect_to employees_path
   end
 

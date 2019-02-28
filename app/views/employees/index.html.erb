@@ -46,7 +46,7 @@
                 <td><%= employee.department %></td>
                 <td><%= employee.duty %></td>
                 <td>
-                  <%= link_to("修改", "#",class:"btn btn-primary btn-xs") %>
+                  <%= link_to("修改", edit_employee_path(employee.id),class:"btn btn-primary btn-xs") %>
                 </td>
               </tr>
             <% end %>

@@ -1,0 +1,57 @@
+<div class="contentpanel">
+  <%= form_for @employee do |f| %>
+    <div class="panel">
+      <div class="panel-body">
+        <%= link_to "返回", employees_path,class:"btn btn-success-alt"%>
+        <div class="head-3fDND_0">
+          <div class="info-2zzSp_0" style="background: #F8F8F9">
+            <%= "人员基本信息"%>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <ul class="employee-list">
+              <li>
+                <span class="glyphicon glyphicon-asterisk"></span>
+                <span>姓名</span>
+                <%= f.text_field :name, required: true %>
+              </li>
+              <li>工号
+              <%= f.text_field :job_number %>
+              </li>
+              
+              <li>部门
+              <%= f.text_field :department %>
+              </li>
+              <li>出生日期
+              <%= f.text_field :birth_date, placeholder: "格式如：20180812" %>
+              </li>  
+            </ul>
+          </div>
+          <div class="col-md-5">
+            <ul class="employee-list">
+              <li>性别
+              <%= f.select :sex, options_for_select([["男", "0"], ["女", "1"]])%>
+              </li>
+              <li>工种
+              <%= f.text_field :worktype %>
+              </li>
+              <li>职务
+              <%= f.text_field :duty %>
+              </li>
+              <li>工作日期
+              <%= f.text_field :working_date, placeholder: "格式如：20180812" %>
+              </li> 
+            </ul>
+          </div>
+        </div> 
+        <div class="center-uRe1b_0">
+          <br><br><br><br><br>
+          <%= f.submit :确定修改, class:"btn button-success"%>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
