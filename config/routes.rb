@@ -5,11 +5,14 @@ Rails.application.routes.draw do
 
   resources :employees do
     collection do
-      get :import_model
       post :import_employee
     end
   end
-  resources :commodities
+  resources :commodities do
+    collection do
+      post :import_commodity
+    end
+  end
   resources :commodity_inventories
   resources :trading_records
   resources :wages do
