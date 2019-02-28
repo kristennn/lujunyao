@@ -12,5 +12,9 @@ Rails.application.routes.draw do
   resources :commodities
   resources :commodity_inventories
   resources :trading_records
-  resources :wages
+  resources :wages do
+    collection do
+      post :import_wage
+    end
+  end
 end
