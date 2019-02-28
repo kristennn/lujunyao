@@ -1,0 +1,30 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h4 class="modal-title" id="myModalLabel">
+          上传星级岗考核汇总表
+        </h4>
+      </div>
+      <div class="modal-body">
+       
+          <%= form_tag import_employee_employees_path, method: 'post', multipart: true do %>
+            <div class="star_import_model_file_style">
+              <ul class ="star_import_model">
+                <li>
+                  <%= file_field_tag :file,required: true %>
+                </li>
+              </ul>
+            </div>
+            <div class="" style="">
+               <%= submit_tag :点击确定,:data => {disable_with: "附件上传中 ... "},:class => "btn btn-primary-status" %>
+            </div>
+
+           
+          <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

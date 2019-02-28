@@ -13,7 +13,7 @@
           <span style="display:inline-block;">
           </span>
           <span style="float: right;"> 
-            <%= link_to("导入人员表", "#",class:"btn btn-primary-upload pull-right") %>
+            <%= link_to("导入人员表", import_model_employees_path, remote: true, class:"btn btn-primary-upload pull-right", "data-toggle" => "modal", "data-target" => "#myModal") %>
             <%= link_to("新增人员", "#",class:"btn btn-primary-upload pull-right") %>
           </span>
         </div>
@@ -57,6 +57,6 @@
   </div>
  </div>
 
-
+<div id="import_model"></div>
 
 

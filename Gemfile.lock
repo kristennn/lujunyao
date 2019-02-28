@@ -179,6 +179,14 @@ GEM
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
     rolify (5.2.0)
+    roo (2.8.2)
+      nokogiri (~> 1)
+      rubyzip (>= 1.2.1, < 2.0.0)
+    roo-xls (1.2.0)
+      nokogiri
+      roo (>= 2.0.0, < 3)
+      spreadsheet (> 0.9.0)
+    ruby-ole (1.2.12.1)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
     sass (3.7.3)
@@ -198,6 +206,8 @@ GEM
     simple_form (4.1.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
+    spreadsheet (1.2.0)
+      ruby-ole (>= 1.0)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -259,6 +269,8 @@ DEPENDENCIES
   rake (= 12.3.2)
   rb-readline
   rolify
+  roo
+  roo-xls
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form

@@ -37,14 +37,11 @@
               <th>工号</th>
               <th>工种</th>
               <th>本月应发现金</th>
-              <th>本月应发易货币</th>
-              <th>本月应发合计</th>
               <th>本月实发现金</th>
-              <th>本月实发易货币</th>
-              <th>本月实发合计</th>
               <th>累计未发现金</th>
-              <th>累计未发易货币</th>
-              <th>累计未发合计</th>
+              <th>本月应发易货币</th>
+              <th>本月已消费易货币</th> 
+              <th>累计剩余易货币</th>
               <th>日期</th>
             </tr>
           </thead>
@@ -61,14 +58,11 @@
                   <td><%= employee.job_number %></td>
                   <td><%= employee.worktype %></td>
                   <td><%= wage.gross_cash %></td>
-                  <td><%= wage.gross_virtual_money %></td>
-                  <td><%= wage.gross_total %></td>
                   <td><%= wage.net_cash %></td>
-                  <td><%= wage.net_virtual_money %></td>
-                  <td><%= wage.net_cash + wage.net_virtual_money %></td>
                   <td><%= wage.accumulative_cash %></td>
+                  <td><%= wage.gross_virtual_money %></td>
+                  <td><%= wage.net_virtual_money %></td>
                   <td><%= wage.accumulative_virtual_money %></td>
-                  <td><%= wage.accumulative_cash + wage.accumulative_virtual_money %></td>
                   <td><%= wage.year %>年<%= wage.month %>月</td>
                 </tr>
               <% end %>

@@ -40,6 +40,10 @@ gem 'jquery-ui-rails'
 gem 'simple_form'
 gem 'pry'
 
+#上传下载表格
+gem 'roo'
+gem 'roo-xls'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
