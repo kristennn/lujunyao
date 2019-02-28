@@ -11,6 +11,7 @@ class CommoditiesController < ApplicationController
 
   def show
     @commodity = Commodity.find(params[:id])
+    @update_events = UpdateEvent.where(table_name: "commodities", stuff_id: @commodity.id)
   end
 
   def edit
@@ -31,6 +32,15 @@ class CommoditiesController < ApplicationController
 
   def update
     @commodity = Commodity.find(params[:id])
+    commodity_columns = ["name", "commodity_code", "commodity_type_name", "commodity_type_code", "unit", "standart", "purchase_price", "selling_price"]
+    commodity_columns.each do |column|
+      commodity_attributes = @commodity.attributes
+      if params[:commodity][column].present?
+        if (commodity_attributes["#{column}"] != params[:commodity][column])
+          UpdateEvent.create(stuff_id: @commodity.id, table_name: "commodities", field_name: "#{column}", field_old_value: "#{commodity_attributes[column]}", field_new_value: "#{params[:commodity][column]}")
+        end
+      end
+    end
     @commodity.update(commodity_params)
     flash[:notice] = "修改成功"
     redirect_to commodities_path

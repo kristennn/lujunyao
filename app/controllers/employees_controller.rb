@@ -6,6 +6,7 @@ class EmployeesController < ApplicationController
  
   def show
     @employee = Employee.find(params[:id])
+    @update_events = UpdateEvent.where(table_name: "employees", stuff_id: @employee.id)
   end
 
   def new 
@@ -35,7 +36,7 @@ class EmployeesController < ApplicationController
       employee_attributes = @employee.attributes
       if params[:employee][column].present?
         if (employee_attributes["#{column}"] != params[:employee][column])
-          UpdateEvent.create(table_name: "employees", field_name: "#{column}", field_old_value: "#{employee_attributes[column]}", field_new_value: "#{params[:employee][column]}")
+          UpdateEvent.create(stuff_id: @employee.id, table_name: "employees", field_name: "#{column}", field_old_value: "#{employee_attributes[column]}", field_new_value: "#{params[:employee][column]}")
         end
       end
     end

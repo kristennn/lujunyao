@@ -1,1 +1,60 @@
-<h4>商品字段改动记录页面</h4>
+<div id="preloader">
+  <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+<div class="contentpanel">
+  <div class="panel panel-body">
+    <%= link_to "返回", commodities_path,class:"btn btn-success-alt"%>
+    <header style="text-align: center">
+      <h4>商品信息改动记录</h4>
+    </header>
+
+    <div class="content-body"> 
+      <div class="panel">
+        <div class="panel-heading" style="background-color: #fff;">
+          <span style="display:inline-block;">
+          </span>
+          <span style="float: right;"> 
+            
+          </span>
+        </div>
+      </div>
+      <div class="content-table" style="clear:both;">
+        <table>
+          <thead>
+            <tr>
+              <th>改动项</th>
+              <th>修改前数据</th>
+              <th>修改后数据</th>
+              <th>修改时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% field_name_transfer = {
+              "name" => "商品名称", 
+              "commodity_code" => "商品编码", 
+              "commodity_type_name" => "商品种类名称", 
+              "commodity_type_code" => "商品种类编码", 
+              "unit" => "计量单位", 
+              "standart" => "规格型号", 
+              "purchase_price" => "进货价", 
+              "selling_price" => "销售价"
+            } %>
+            <% @update_events.each do |event| %>
+              <tr>
+                <td><%= field_name_transfer[event.field_name] %></td>
+                <td><%= event.field_old_value %></td>
+                <td><%= event.field_new_value %></td>
+                <td><%= event.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
