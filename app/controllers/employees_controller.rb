@@ -30,6 +30,15 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
+    employee_columns = ["name", "sex", "job_number", "worktype", "department", "duty", "birth_date", "working_date"]
+    employee_columns.each do |column|
+      employee_attributes = @employee.attributes
+      if params[:employee][column].present?
+        if (employee_attributes["#{column}"] != params[:employee][column])
+          UpdateEvent.create(table_name: "employees", field_name: "#{column}", field_old_value: "#{employee_attributes[column]}", field_new_value: "#{params[:employee][column]}")
+        end
+      end
+    end
     @employee.update(employee_params)
     flash[:notice] = "修改成功"
     redirect_to employees_path
