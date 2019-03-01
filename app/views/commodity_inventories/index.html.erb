@@ -32,7 +32,7 @@
                   <td><%= commodity.standard %></td>
                   <td><%= commodity_inventory.current_inventory  %></td>
                   <td><%= link_to("入库", show_modal_commodity_inventories_path(commodity_id: commodity.id), remote: true, "data-toggle" => "modal", "data-target" => "#myModal",class:"btn btn-primary btn-xs") %></td>
-                  <td><%= link_to("查看记录", commodity_inventory_path(commodity.id),class:"btn btn-primary btn-xs") %></td>
+                  <td><%= link_to("查看记录", commodity_inventory_path(commodity.id), class:"btn btn-primary btn-xs") %></td>
                 </tr>
               <% end %>
             <% end %>

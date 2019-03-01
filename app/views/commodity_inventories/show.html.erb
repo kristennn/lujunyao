@@ -9,8 +9,9 @@
 
     <div class="content-body">
       <span style="display:inline-block;">
-        <%= link_to("查看入库记录", "#",class:"btn btn-primary-upload pull-right") %>
-        <%= link_to("查看出库记录", "#",class:"btn btn-primary-upload pull-right") %>
+        <%= link_to("查看全部", commodity_inventory_path(@commodity.id), class:"btn btn-primary-upload pull-right") %>
+        <%= link_to("查看入库记录", commodity_inventory_path(@commodity.id, type: "入库"), class:"btn btn-primary-upload pull-right") %>
+        <%= link_to("查看出库记录", commodity_inventory_path(@commodity.id, type: "出库"), class:"btn btn-primary-upload pull-right") %>
       </span> 
       <div class="content-table" style="clear:both;">
         <table>
@@ -29,16 +30,14 @@
             </tr>
           </thead>
           <tbody>
-              <% if CommodityInventory.where(commodity_id: @commodity.id).present? %>
-                <% commodity_inventories = CommodityInventory.where(commodity_id: @commodity.id) %>
-                <% commodity_inventories.each do |commodity_inventory| %>
+              <% if @commodity_inventories.present? %>
+                <% @commodity_inventories.each do |commodity_inventory| %>
                   <tr>
                     <td><%= @commodity.commodity_code %></td>
                     <td><%= @commodity.name %></td>
                     <td><%= @commodity.unit %></td>
                     <td><%= @commodity.standard %></td>
-                    <% inventory_hash = {true => "入库", false => "出库"} %>
-                    <td><%= inventory_hash[commodity_inventory.operate_type] %></td>
+                    <td><%= commodity_inventory.operate_type %></td>
                     <td><%= commodity_inventory.quantity %><%= @commodity.unit %></td>
                     <td><%= commodity_inventory.current_inventory %></td>
                     <td><%= commodity_inventory.operator %></td>

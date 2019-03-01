@@ -6,6 +6,12 @@ class CommodityInventoriesController < ApplicationController
 
   def show
     @commodity = Commodity.find(params[:id])
+    if params[:type].present?
+      @type = params[:type]
+      @commodity_inventories = CommodityInventory.where(commodity_id: @commodity.id, operate_type: @type)
+    else
+      @commodity_inventories = CommodityInventory.where(commodity_id: @commodity.id)
+    end
   end
 
   def show_modal
