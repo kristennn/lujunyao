@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :wages do
     collection do
       post :import_wage
+      get :show_edit_modal
+      get :show_pay_modal
     end
   end
 end

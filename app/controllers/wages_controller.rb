@@ -3,6 +3,7 @@ class WagesController < ApplicationController
   def index
     @employees = Employee.all
     @wage = Wage.new
+
   end
 
   def show
@@ -19,6 +20,39 @@ class WagesController < ApplicationController
       flash[:notice] = "录入工资成功"
     end 
     redirect_to wages_path
+  end
+
+  def update
+    @wage = Wage.find(params[:id])
+    transfer_columns = {
+      "gross_cash" => "应发现金", 
+      "gross_virtual_money" => "应发易货币", 
+      "net_cash" => "实发现金"
+    }
+    wage_attributes = @wage.attributes
+    transfer_columns.each do |column|
+      binding.pry
+      if (wage_attributes["#{column[0]}"] != params[:wage][column[0]])
+        UpdateEvent.create(stuff_id: @wage.id, table_name: "wages", field_name: "#{column[1]}", field_old_value: "#{wage_attributes[column[0]]}", field_new_value: "#{params[:wage][column[0]]}")
+      end
+    end
+    @wage.update(gross_cash: params[:wage]["gross_cash"], gross_virtual_money: params[:wage]["gross_virtual_money"], net_cash: params[:wage]["net_cash"])
+    flash[:notice] = "修改成功"
+    redirect_to wages_path
+  end
+
+  def show_edit_modal
+    @wage = Wage.find_by(employee_id: params[:employee_id], year: params[:year], month: params[:month])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def show_pay_modal
+    @wage = Wage.find_by(employee_id: params[:employee_id], year: params[:year], month: params[:month])
+    respond_to do |format|
+      format.js
+    end
   end
 
   def import_wage

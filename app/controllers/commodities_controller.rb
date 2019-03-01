@@ -32,12 +32,21 @@ class CommoditiesController < ApplicationController
 
   def update
     @commodity = Commodity.find(params[:id])
-    commodity_columns = ["name", "commodity_code", "commodity_type_name", "commodity_type_code", "unit", "standart", "purchase_price", "selling_price"]
-    commodity_columns.each do |column|
+    transfer_columns = {
+      "name" => "商品名称", 
+      "commodity_code" => "商品编码", 
+      "commodity_type_name" => "商品种类名称", 
+      "commodity_type_code" => "商品种类编码", 
+      "unit" => "计量单位", 
+      "standart" => "规格型号", 
+      "purchase_price" => "进货价", 
+      "selling_price" => "销售价"
+    }
+    transfer_columns.each do |column|
       commodity_attributes = @commodity.attributes
-      if params[:commodity][column].present?
-        if (commodity_attributes["#{column}"] != params[:commodity][column])
-          UpdateEvent.create(stuff_id: @commodity.id, table_name: "commodities", field_name: "#{column}", field_old_value: "#{commodity_attributes[column]}", field_new_value: "#{params[:commodity][column]}")
+      if params[:commodity][column[0]].present?
+        if (commodity_attributes["#{column[0]}"] != params[:commodity][column[0]])
+          UpdateEvent.create(stuff_id: @commodity.id, table_name: "commodities", field_name: "#{column[1]}", field_old_value: "#{commodity_attributes[column[0]]}", field_new_value: "#{params[:commodity][column[0]]}")
         end
       end
     end

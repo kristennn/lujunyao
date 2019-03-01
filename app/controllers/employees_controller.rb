@@ -31,12 +31,21 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
-    employee_columns = ["name", "sex", "job_number", "worktype", "department", "duty", "birth_date", "working_date"]
-    employee_columns.each do |column|
+    transfer_columns = {
+      "name" => "姓名", 
+      "sex" => "性别", 
+      "job_number" => "工号", 
+      "worktype" => "工种", 
+      "department" => "部门", 
+      "duty" => "职务", 
+      "birth_date" => "出生日期", 
+      "working_date" => "入职日期"
+    }
+    transfer_columns.each do |column|
       employee_attributes = @employee.attributes
-      if employee_attributes["#{column}"].present?
-        if (employee_attributes["#{column}"] != params[:employee][column])
-          UpdateEvent.create(stuff_id: @employee.id, table_name: "employees", field_name: "#{column}", field_old_value: "#{employee_attributes[column]}", field_new_value: "#{params[:employee][column]}")
+      if employee_attributes["#{column[0]}"].present?
+        if (employee_attributes["#{column[0]}"] != params[:employee[0]][column])
+          UpdateEvent.create(stuff_id: @employee.id, table_name: "employees", field_name: "#{column[1]}", field_old_value: "#{employee_attributes[column[0]]}", field_new_value: "#{params[:employee][column[0]]}")
         end
       end
     end
