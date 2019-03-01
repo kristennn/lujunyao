@@ -59,8 +59,10 @@ class CommodityInventoriesController < ApplicationController
     flash[:notice] = "修改成功"
     redirect_to commodity_inventory_path(commodity_inventory.commodity_id)
   end
-  # 1. 更新记录
-  # 2. 重新计算当前库存
-  # 3. 插入修改记录
+
+  def update_event
+    @commodity_inventory = CommodityInventory.find(params[:id])
+    @update_events = UpdateEvent.where(table_name: "commodity_inventories", stuff_id: params[:id])
+  end
 
 end

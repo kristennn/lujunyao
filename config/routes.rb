@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       get :show_modal
       get :edit_modal
     end
+    member do
+      get :update_event
+    end
   end
   resources :trading_records
   resources :wages do

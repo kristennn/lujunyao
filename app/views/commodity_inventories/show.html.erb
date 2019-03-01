@@ -33,13 +33,13 @@
               <% if @commodity_inventories.present? %>
                 <% @commodity_inventories.each do |commodity_inventory| %>
                   <tr>
-                    <td><%= @commodity.commodity_code %></td>
+                    <td class="row-click-able" data-url="/commodity_inventories/<%= commodity_inventory.id%>/update_event"><%= @commodity.commodity_code %></td>
                     <td><%= @commodity.name %></td>
                     <td><%= @commodity.unit %></td>
                     <td><%= @commodity.standard %></td>
                     <td><%= commodity_inventory.operate_type %></td>
                     <td><%= commodity_inventory.quantity %><%= @commodity.unit %></td>
-                    <td><%= commodity_inventory.current_inventory %></td>
+                    <td><%= commodity_inventory.current_inventory %><%= @commodity.unit %></td>
                     <td><%= commodity_inventory.operator %></td>
                     <td><%= commodity_inventory.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
                     <% if commodity_inventory.id == @commodity_inventories.last.id %>
