@@ -2,6 +2,8 @@ class Wage < ApplicationRecord
 
   validates :employee_id, presence: true
   validates :employee_id, uniqueness: true
+  validates :gross_cash, presence: true
+  validates :gross_virtual_money, presence: true
 
   def self.import_table(file, year, month)
     head_transfer = {
@@ -15,7 +17,7 @@ class Wage < ApplicationRecord
     (2..spreadsheet.last_row).each do |j|
       row = Hash[[header, spreadsheet.row(j)].transpose]
 
-      if Employee.find_by(name: row["employee_id"]).present?
+      if (Employee.find_by(name: row["employee_id"]).present?) && (row["gross_cash"].present?) && (row["gross_virtual_money"].present?)
         employee_id = Employee.find_by(name: row["employee_id"]).id
         wage = find_by(employee_id: employee_id, year: year, month: month) || new
 
@@ -26,7 +28,7 @@ class Wage < ApplicationRecord
         wage.month = month
         wage.save!
       else
-        message[:employee] = "姓名不得为空，请检查后再上传"
+        message[:employee] = "姓名、应发现金与应发易货币不得为空，请检查后再上传"
       end
     end
     return message
