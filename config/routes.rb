@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :commodity_inventories do
     collection do
       get :show_modal
+      get :edit_modal
     end
   end
   resources :trading_records

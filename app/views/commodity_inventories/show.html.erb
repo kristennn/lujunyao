@@ -42,7 +42,9 @@
                     <td><%= commodity_inventory.current_inventory %></td>
                     <td><%= commodity_inventory.operator %></td>
                     <td><%= commodity_inventory.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
-                    <td><%= link_to("修改", "#",class:"btn btn-primary btn-xs") %></td>
+                    <% if commodity_inventory.id == @commodity_inventories.last.id %>
+                      <td><%= link_to("修改", edit_modal_commodity_inventories_path(commodity_inventory_id: commodity_inventory.id), remote: true, "data-toggle" => "modal", "data-target" => "#editModal1", class:"btn btn-primary btn-xs") %></td>
+                    <% end %>
                   </tr>
                 <% end %>
               <% end %>
@@ -51,7 +53,9 @@
       </div>
     </div>
   </div>
- </div>
+</div>
 
 
-
+<div id="editModal">
+  <%= render 'edit_modal' %>
+</div>
