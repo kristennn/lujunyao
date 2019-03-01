@@ -6,7 +6,7 @@
 <div class="contentpanel">
   <div class="panel panel-body">
     <header style="text-align: center">
-      <h4>人员工资页面</h4> 
+      <h4><%= @year %>年<%= @month %>月人员工资</h4> 
     </header>
 
     <div class="content-body"> 
@@ -14,7 +14,7 @@
         <div class="panel-heading" style="background-color: #fff;">
           <span style="display:inline-block;">
             <span style="display:inline-block;">
-              <%= form_tag "#", method: :get do%>
+              <%= form_tag wages_path, method: :get do%>
               <%= label_tag :"请选择年份和月份：" %>
               <%= select_tag(:year, options_for_select(Wage.pluck(:year).uniq), {:required => "true"}) %>
               <%= select_tag(:month, options_for_select(Wage.pluck(:month).uniq), {:required => "true"}) %>
@@ -46,26 +46,24 @@
             </tr>
           </thead>
           <tbody>
-            <% @employees.each do |employee| %>
-              <% if Wage.find_by(employee_id: employee.id, year: Time.now.year, month: Time.now.month).present? %>
-                <% wage = Wage.find_by(employee_id: employee.id, year: Time.now.year, month: Time.now.month) %>
-                <tr>
-                  <td>
-                    <%= link_to("发工资", show_pay_modal_wages_path(employee_id: employee.id, year: Time.now.year, month: Time.now.month), remote: true, "data-toggle" => "modal", "data-target" => "#payModal", class:"btn btn-primary btn-xs") %>
-                    <%= link_to("修改", show_edit_modal_wages_path(employee_id: employee.id, year: Time.now.year, month: Time.now.month), remote: true, "data-toggle" => "modal", "data-target" => "#editModal", class:"btn btn-primary btn-xs") %>
-                  </td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= employee.name %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= employee.job_number %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= employee.worktype %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.gross_cash %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.net_cash %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.accumulative_cash %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.gross_virtual_money %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.net_virtual_money %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.accumulative_virtual_money %></td>
-                  <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.year %>年<%= wage.month %>月</td>
-                </tr>
-              <% end %>
+            <% @wages.each do |wage| %>
+              <% employee = Employee.find(wage.employee_id)  %>
+              <tr>
+                <td>
+                  <%= link_to("发工资", show_pay_modal_wages_path(employee_id: employee.id, year: @year, month: @month), remote: true, "data-toggle" => "modal", "data-target" => "#payModal", class:"btn btn-primary btn-xs") %>
+                  <%= link_to("修改", show_edit_modal_wages_path(employee_id: employee.id, year: @year, month: @month), remote: true, "data-toggle" => "modal", "data-target" => "#editModal", class:"btn btn-primary btn-xs") %>
+                </td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= employee.name %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= employee.job_number %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= employee.worktype %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.gross_cash %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.net_cash %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.accumulative_cash %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.gross_virtual_money %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.net_virtual_money %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.accumulative_virtual_money %></td>
+                <td class="row-click-able" data-url="/wages/<%= wage.id%>"><%= wage.year %>年<%= wage.month %>月</td>
+              </tr>
             <% end %>
           </tbody>
         </table>      

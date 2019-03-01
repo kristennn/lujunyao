@@ -1,7 +1,6 @@
 class Wage < ApplicationRecord
 
   validates :employee_id, presence: true
-  validates :employee_id, uniqueness: true
   validates :gross_cash, presence: true
   validates :gross_virtual_money, presence: true
 
