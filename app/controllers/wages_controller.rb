@@ -55,6 +55,17 @@ class WagesController < ApplicationController
     end
   end
 
+  def pay_cash
+    @wage = Wage.find(params[:wage_id])
+    if @wage.net_cash.present?
+      flash[:warning] = "本月已经添加过已发现金了，若需要修改请使用修改功能"
+    else
+      @wage.update(net_cash: params[:net_cash])
+      flash[:notice] = "成功录入"
+    end
+    redirect_to wages_path
+  end
+
   def import_wage
     if !(params[:year].present? and params[:month].present?)
       flash[:alert] = "请选择年份和月份"

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post :import_wage
       get :show_edit_modal
       get :show_pay_modal
+      post :pay_cash
     end
   end
 end

@@ -7,27 +7,20 @@
         <h4 class="modal-title" id="myModalLabel">
           发工资
         </h4>
-      </div>
+      </div> 
       <div class="modal-body">
-        <%= form_for @wage do |f| %>
+        <%= form_tag pay_cash_wages_path do %>
           <div class="star_import_model_file_style">
             <ul class ="star_import_model">
               <li>
-                <%= label_tag "本月应发现金：" %>
-                <%= f.text_field :gross_cash, required: true %>
-              </li>
-              <li>
                 <%= label_tag "本月实发现金：" %>
-                <%= f.text_field :net_cash, required: true %>
-              </li>
-              <li>
-                <%= label_tag "本月应发易货币：" %>
-                <%= f.text_field :gross_virtual_money, required: true %>
+                <%= text_field_tag :net_cash, nil, required: true %>
+                <%= hidden_field_tag :wage_id, @wage.id %>
               </li>
             </ul>
           </div>
           <div class="" style="">
-             <%= submit_tag :点击确定,:data => {disable_with: "附件上传中 ... "},:class => "btn btn-primary-status" %>
+             <%= submit_tag :点击确定, :class => "btn btn-primary-status" %>
           </div>
         <% end %>
       </div>
