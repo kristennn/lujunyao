@@ -1,5 +1,3 @@
-
-
 <div id="preloader">
   <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
 </div>
@@ -26,14 +24,14 @@
           <tbody>
             <% @commodities.each do |commodity| %>
               <% if CommodityInventory.where(commodity_id: commodity.id).present? %>
-                <% commodity_inventories = CommodityInventory.where(commodity_id: commodity.id) %>
+                <% commodity_inventory = CommodityInventory.where(commodity_id: commodity.id).last %>
                 <tr>
                   <td><%= commodity.commodity_code %></td>
                   <td><%= commodity.name %></td>
                   <td><%= commodity.unit %></td>
-                  <td><%= commodity.standart %></td>
-                  <td><%= commodity_inventories.order("created_at DESC").first.current_inventory  %></td>
-                  <td><%= link_to("入库", "#",class:"btn btn-primary btn-xs") %></td>
+                  <td><%= commodity.standard %></td>
+                  <td><%= commodity_inventory.current_inventory  %></td>
+                  <td><%= link_to("入库", show_modal_commodity_inventories_path(commodity_id: commodity.id), remote: true, "data-toggle" => "modal", "data-target" => "#myModal",class:"btn btn-primary btn-xs") %></td>
                   <td><%= link_to("查看记录", commodity_inventory_path(commodity.id),class:"btn btn-primary btn-xs") %></td>
                 </tr>
               <% end %>
@@ -46,4 +44,6 @@
  </div>
 
 
-
+<div id="showModal">
+  <%= render 'show_modal' %>
+</div>

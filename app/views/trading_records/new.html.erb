@@ -42,7 +42,7 @@
                   <td><%= commodity.commodity_code %></td>
                   <td><%= commodity.name %></td>
                   <td><%= commodity.unit %></td>
-                  <td><%= commodity.standart %></td>
+                  <td><%= commodity.standard %></td>
                   <td><%= commodity.selling_price %></td>
                   <td><%= text_field_tag :trading_quantity %><%= commodity.unit %></td>
                   <td><%= select_tag(:employee_name, options_for_select(@employees.collect{ |u| u.name }), {:prompt => "请选择", :required => "true"})  %></td>

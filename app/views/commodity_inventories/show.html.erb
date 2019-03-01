@@ -36,7 +36,7 @@
                     <td><%= @commodity.commodity_code %></td>
                     <td><%= @commodity.name %></td>
                     <td><%= @commodity.unit %></td>
-                    <td><%= @commodity.standart %></td>
+                    <td><%= @commodity.standard %></td>
                     <% inventory_hash = {true => "入库", false => "出库"} %>
                     <td><%= inventory_hash[commodity_inventory.operate_type] %></td>
                     <td><%= commodity_inventory.quantity %><%= @commodity.unit %></td>

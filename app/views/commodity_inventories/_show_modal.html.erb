@@ -1,0 +1,47 @@
+<!-- 编辑工资弹框代码-开始 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h4 class="modal-title" id="myModalLabel">
+          填写入库信息
+        </h4>
+      </div> 
+      <div class="modal-body">
+        <div class="star_import_model_file_style">
+          <ul class ="star_import_model">
+            <% if @commodity.present? %>
+              <li><h5>请先确定商品信息:</h5></li> 
+              <li>商品名称：<%= @commodity.name %></li>
+              <li>商品编码：<%= @commodity.commodity_code %></li>
+            <% end %>
+          </ul>
+        </div>
+        <br>
+        <%= form_tag commodity_inventories_path, method: 'post' do %>
+          <div class="star_import_model_file_style">
+            <ul class ="star_import_model">
+              <li><h5>请填写入库信息:</h5></li>
+              <li>
+                <%= label_tag "入库数量" %>
+                <%= text_field_tag :quantity, nil, required: true %>
+              </li>
+              <li>
+                <%= label_tag "运费" %>
+                <%= text_field_tag :freight, nil, required: true %>
+                <% if @commodity.present? %>
+                  <%= hidden_field_tag :commodity_id, @commodity.id %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+          <div class="" style="">
+             <%= submit_tag :点击确定, :class => "btn btn-primary-status" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 编辑工资弹框代码-结束 -->

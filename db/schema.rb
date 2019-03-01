@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_28_111145) do
+ActiveRecord::Schema.define(version: 2019_03_01_091331) do
 
   create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_code", comment: "商品编码"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2019_02_28_111145) do
     t.integer "commodity_type_code", comment: "商品种类编码"
     t.string "name", comment: "商品名称"
     t.string "unit", comment: "计量单位"
-    t.string "standart", comment: "规格型号"
+    t.string "standard"
     t.float "purchase_price", comment: "进货价格"
     t.float "selling_price", comment: "销售价格"
     t.datetime "created_at", null: false
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2019_02_28_111145) do
 
   create_table "commodity_inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_id"
-    t.boolean "operate_type", comment: "出入库类型"
+    t.string "operate_type", comment: "出入库类型"
     t.integer "quantity", comment: "数量"
     t.integer "current_inventory", comment: "当前库存"
     t.float "freight", comment: "运费"

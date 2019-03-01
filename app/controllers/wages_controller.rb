@@ -11,7 +11,7 @@ class WagesController < ApplicationController
       @month = Time.now.month
       @wages = Wage.all
     end
-  end
+  end 
 
   def show
     @wage = Wage.find(params[:id])

@@ -13,7 +13,11 @@ Rails.application.routes.draw do
       post :import_commodity
     end
   end
-  resources :commodity_inventories
+  resources :commodity_inventories do
+    collection do
+      get :show_modal
+    end
+  end
   resources :trading_records
   resources :wages do
     collection do

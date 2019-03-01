@@ -25,6 +25,7 @@ class CommoditiesController < ApplicationController
     else
       @commodity = Commodity.new(commodity_params)
       @commodity.save!
+      CommodityInventory.create(commodity_id: @commodity.id, quantity: 0)
       flash[:notice] = "新增成功"
     end
     redirect_to commodities_path
@@ -38,7 +39,7 @@ class CommoditiesController < ApplicationController
       "commodity_type_name" => "商品种类名称", 
       "commodity_type_code" => "商品种类编码", 
       "unit" => "计量单位", 
-      "standart" => "规格型号", 
+      "standard" => "规格型号", 
       "purchase_price" => "进货价", 
       "selling_price" => "销售价"
     }
@@ -73,7 +74,7 @@ class CommoditiesController < ApplicationController
   private
 
   def commodity_params
-    params.require(:commodity).permit(:name, :commodity_code, :commodity_type_name, :commodity_type_code, :unit, :standart, :purchase_price, :selling_price)
+    params.require(:commodity).permit(:name, :commodity_code, :commodity_type_name, :commodity_type_code, :unit, :standard, :purchase_price, :selling_price)
   end
 
 end
