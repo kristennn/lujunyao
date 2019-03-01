@@ -29,19 +29,9 @@
             </tr>
           </thead>
           <tbody>
-            <% field_name_transfer = {
-              "name" => "姓名", 
-              "sex" => "性别", 
-              "job_number" => "工号", 
-              "worktype" => "工种", 
-              "department" => "部门", 
-              "duty" => "职务", 
-              "birth_date" => "出生日期", 
-              "working_date" => "入职日期"
-            } %>
             <% @update_events.each do |event| %>
               <tr>
-                <td><%= field_name_transfer[event.field_name] %></td>
+                <td><%= event.field_name %></td>
                 <td><%= event.field_old_value %></td>
                 <td><%= event.field_new_value %></td>
                 <td><%= event.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>

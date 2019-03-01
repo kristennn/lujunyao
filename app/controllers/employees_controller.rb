@@ -44,7 +44,7 @@ class EmployeesController < ApplicationController
     transfer_columns.each do |column|
       employee_attributes = @employee.attributes
       if employee_attributes["#{column[0]}"].present?
-        if (employee_attributes["#{column[0]}"] != params[:employee[0]][column])
+        if (employee_attributes["#{column[0]}"] != params[:employee][column[0]])
           UpdateEvent.create(stuff_id: @employee.id, table_name: "employees", field_name: "#{column[1]}", field_old_value: "#{employee_attributes[column[0]]}", field_new_value: "#{params[:employee][column[0]]}")
         end
       end

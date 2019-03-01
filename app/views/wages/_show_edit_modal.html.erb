@@ -16,10 +16,12 @@
                 <%= label_tag "本月应发现金：" %>
                 <%= f.text_field :gross_cash, required: true %>
               </li>
-              <li>
-                <%= label_tag "本月实发现金：" %>
-                <%= f.text_field :net_cash, required: true %>
-              </li>
+              <% if @wage.net_cash.present? %>
+                <li>
+                  <%= label_tag "本月实发现金：" %>
+                  <%= f.text_field :net_cash, required: true %>
+                </li>
+              <% end %>
               <li>
                 <%= label_tag "本月应发易货币：" %>
                 <%= f.text_field :gross_virtual_money, required: true %>

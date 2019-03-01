@@ -8,6 +8,7 @@ class WagesController < ApplicationController
 
   def show
     @wage = Wage.find(params[:id])
+    @update_events = UpdateEvent.where(table_name: "wages", stuff_id: @wage.id)
   end
 
   def create
@@ -31,7 +32,6 @@ class WagesController < ApplicationController
     }
     wage_attributes = @wage.attributes
     transfer_columns.each do |column|
-      binding.pry
       if (wage_attributes["#{column[0]}"] != params[:wage][column[0]])
         UpdateEvent.create(stuff_id: @wage.id, table_name: "wages", field_name: "#{column[1]}", field_old_value: "#{wage_attributes[column[0]]}", field_new_value: "#{params[:wage][column[0]]}")
       end
