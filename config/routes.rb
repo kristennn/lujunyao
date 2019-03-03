@@ -22,7 +22,12 @@ Rails.application.routes.draw do
       get :update_event
     end
   end
-  resources :trading_records
+  resources :trading_records do
+    collection do
+      get :show_edit_modal
+      get :choose_commodity
+    end
+  end
   resources :wages do
     collection do
       post :import_wage

@@ -44,6 +44,9 @@ gem 'pry'
 gem 'roo'
 gem 'roo-xls'
 
+#多选gem
+gem "select2-rails"
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

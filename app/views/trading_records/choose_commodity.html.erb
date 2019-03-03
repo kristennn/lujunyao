@@ -1,0 +1,74 @@
+<div id="preloader">
+  <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+<div class="contentpanel">
+  <div class="panel panel-body">
+    <header style="text-align: center">
+      <h4>选择交易商品</h4>
+    </header>
+
+  <div class="content-body"> 
+    <div class="panel">
+      <div class="panel-heading" style="background-color: #fff;">
+          <%= form_tag choose_commodity_trading_records_path, method: :get do%>
+            <label >请选择商品类型：</label>
+            <select class="form-control" name="commodity_type[]" id="commodity_select2" multiple="multiple" style="width:200px;height:20px;">
+              <% @commodity_types.each do |commodity_type| %>
+                <option value="<%= commodity_type %>"><%= commodity_type%></option>
+              <% end %>
+            </select>
+            <label >请选择商品名称：</label>
+            <select class="form-control" name="commodity_name[]" id="commodity_select2" multiple="multiple" style="width:200px;height:20px;">
+              <% @commodity_names.each do |commodity_name| %>
+                <option value="<%= commodity_name %>"><%= commodity_name%></option>
+              <% end %>
+            </select>
+            <%= submit_tag :筛选 %>
+          <% end %>
+        <span style="float: right;"> 
+          <%= link_to("查看过往交易记录", trading_records_path,class:"btn btn-primary-upload pull-right") %>
+        </span>
+      </div>
+      <div class="content-table" style="clear:both;">
+        <%= form_tag new_trading_record_path, method: :get do %>
+          <table>
+            <thead>
+              <tr>
+                <th>全选</th>
+                <th>商品编码</th>
+                <th>商品名称</th>
+                <th>商品种类编码</th>
+                <th>商品种类名称</th>
+                <th>计量单位</th>
+                <th>规格型号</th>
+                <th>销售价</th>
+              </tr>
+            </thead>
+            <tbody>              
+              <% @commodities.each do |commodity| %>
+                <tr>
+                  <td class="select-checkbox">
+                    <%= check_box_tag "commodity_id[]",commodity.id,false,class: "checkbox-body" %>
+                  </td>
+                  <td><%= commodity.commodity_code %></td>
+                  <td><%= commodity.name %></td>
+                  <td><%= commodity.commodity_type_code %></td>
+                  <td><%= commodity.commodity_type_name %></td>
+                  <td><%= commodity.unit %></td>
+                  <td><%= commodity.standard %></td>
+                  <td><%= commodity.selling_price %></td>
+                </tr>
+              <% end %> 
+            </tbody>
+          </table>
+          <br><br><br> 
+          <%= submit_tag :录入交易 %>
+        <% end %>   
+      </div>
+    </div>
+  </div>
+ </div>
+
+<script>
+  $("#commodity_select2").select2( { theme: "bootstrap"});
+</script>

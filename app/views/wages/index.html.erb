@@ -16,7 +16,7 @@
               <%= label_tag :"请选择年份和月份：" %>
               <%= select_tag(:year, options_for_select(Wage.pluck(:year).uniq), {:required => "true"}) %>
               <%= select_tag(:month, options_for_select(Wage.pluck(:month).uniq), {:required => "true"}) %>
-              <%= submit_tag :筛选 %>
+              <%= submit_tag :筛选 %> 
               <% end %>
             </span>
           </span>

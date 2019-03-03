@@ -4,14 +4,14 @@
 <div class="contentpanel">
   <div class="panel panel-body">
     <header style="text-align: center">
-      <h4>过往交易记录列表</h4>
+      <h4><%= @year %>年<%= @month %>月交易记录列表</h4>
     </header>
 
     <div class="content-body"> 
       <div class="panel">
         <div class="panel-heading" style="background-color: #fff;">
           <span style="display:inline-block;">
-            <%= form_tag "#", method: :get do%>
+            <%= form_tag trading_records_path, method: :get do%>
               <%= label_tag :"请选择年份和月份：" %>
               <%= select_tag(:year, options_for_select(Wage.pluck(:year).uniq), {:required => "true"}) %>
               <%= select_tag(:month, options_for_select(Wage.pluck(:month).uniq), {:required => "true"}) %>
@@ -20,7 +20,7 @@
           </span>
           <span style="float: right;"> 
           </span>
-        </div>
+        </div> 
       </div>
       <div class="content-table" style="clear:both;">
         <table>
@@ -56,7 +56,7 @@
                 <td><%= trading_record.total_amount %></td>
                 <td><%= trading_record.operator %></td>
                 <td><%= trading_record.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
-                <td><%= link_to("修改", "#",class:"btn btn-primary btn-xs") %></td>
+                <td><%= link_to("修改", show_edit_modal_trading_records_path(trading_record_id: trading_record.id), remote: true, "data-toggle" => "modal", "data-target" => "#editModal", class:"btn btn-primary btn-xs") %></td>
               </tr>
             <% end %>
           </tbody>
@@ -67,5 +67,7 @@
  </div>
 
 
-
+<div id="showEditModal">
+  <%= render 'show_edit_modal' %>
+</div>
 
