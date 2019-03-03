@@ -44,14 +44,15 @@
                   <td><%= commodity.unit %></td>
                   <td><%= commodity.standard %></td>
                   <td><%= commodity.selling_price %></td>
-                  <td><%= text_field_tag :trading_quantity %><%= commodity.unit %></td>
-                  <td><%= select_tag(:employee_name, options_for_select(@employees.collect{ |u| u.name }), {:prompt => "请选择", :required => "true"})  %></td>
-                  <td><%= text_field_tag :discount %></td>
+                  <td><%= text_field_tag "trading[#{commodity.id}[quantity]]" %><%= commodity.unit %></td>
+                  <td><%= select_tag("trading[#{commodity.id}[employee_id]]", options_for_select(@employees.collect{ |u| [u.name, u.id] }), {:prompt => "请选择", :required => "true"})  %></td>
+                  <td><%= text_field_tag "trading[#{commodity.id}[discount]]" %></td>
                 </tr>
               <% end %>
             </tbody>
           </table>
           <br><br><br>
+
           <%= submit_tag :确定录入, class: "btn btn-primary-upload pull-right" %>
         <% end %>      
       </div>

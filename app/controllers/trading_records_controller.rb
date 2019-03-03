@@ -19,6 +19,19 @@ class TradingRecordsController < ApplicationController
     @employees = Employee.all
   end
 
+  def create
+    params[:trading].keys.each do |commodity_id|
+      trading_record = TradingRecord.create(commodity_id: commodity_id, quantity: params[:trading]["#{commodity_id}"]["quantity"], discount: params[:trading]["#{commodity_id}"]["discount"], employee_id: params[:trading]["#{commodity_id}"]["employee_id"])
+      flash[:notice] = "录入交易成功"
+    end
+
+    
+    redirect_to choose_commodity_trading_records_path
+    #录入交易记录
+    #减少员工的钱
+    #减少商品的库存
+  end
+
   def update
 
     flash[:notice] = "修改成功"
@@ -47,6 +60,12 @@ class TradingRecordsController < ApplicationController
     else
       @commodities = Commodity.all
     end
+  end
+
+  private
+
+  def trading_record_params
+    params.require(:trading_record).permit(:quantity, :discount, :employee_id, :commodity_id)
   end
 
 end
