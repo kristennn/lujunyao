@@ -65,7 +65,7 @@ class WagesController < ApplicationController
 
   def pay_cash
     @wage = Wage.find(params[:wage_id])
-    if @wage.net_cash.present?
+    if @wage.net_cash != 0
       flash[:warning] = "本月已经添加过已发现金了，若需要修改请使用修改功能"
     else
       @wage.update(net_cash: params[:net_cash])

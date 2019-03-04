@@ -15,7 +15,7 @@ class TradingRecordsController < ApplicationController
 
   def show
     @trading_record = TradingRecord.find(params[:id])
-    @update_events = UpdateEvent.where(table_name: "trading_events", stuff_id: @trading_record.id)
+    @update_events = UpdateEvent.where(table_name: "trading_records", stuff_id: @trading_record.id)
   end
 
   def new
@@ -36,7 +36,7 @@ class TradingRecordsController < ApplicationController
       discount = params[:trading]["#{commodity_id}"]["discount"]
       price = (Commodity.find(commodity_id).selling_price) * discount.to_f
       total_amount = price * quantity.to_i
-      com_cur_inven = CommodityCurrnetInventory.find_by(commodity_id: commodity_id)
+      com_cur_inven = CommodityCurrentInventory.find_by(commodity_id: commodity_id)
       wage = Wage.where(employee_id: employee_id).last
       if quantity.to_i > com_cur_inven.current_inventory
         commodity_ids << commodity_id
@@ -62,7 +62,7 @@ class TradingRecordsController < ApplicationController
         discount = params[:trading]["#{commodity_id}"]["discount"]
         price = (Commodity.find(commodity_id).selling_price) * discount.to_f
         total_amount = price * quantity.to_i
-        com_cur_inven = CommodityCurrnetInventory.find_by(commodity_id: commodity_id)
+        com_cur_inven = CommodityCurrentInventory.find_by(commodity_id: commodity_id)
         wage = Wage.where(employee_id: employee_id).last
         #录入交易记录
         TradingRecord.create(commodity_id: commodity_id, employee_id: employee_id, discount_price: price, quantity: quantity, discount: discount, total_amount: total_amount)    
@@ -102,7 +102,8 @@ class TradingRecordsController < ApplicationController
       end
     end
     #更新交易记录
-    trading_record.update(employee_id: employee.id, discount: params[:discount], quantity: params[:quantity])
+    total_amount = Commodity.find(trading_record.commodity_id).selling_price * params[:discount].to_f * params[:quantity].to_i
+    trading_record.update(employee_id: employee.id, discount: params[:discount], quantity: params[:quantity], total_amount: total_amount)
     #更新出库记录及当前库存
     CommodityInventory.find_by(trading_id: params[:trading_record_id]).update(quantity: params[:quantity])
     CommodityCurrentInventory.find_by(commodity_id: trading_record.commodity_id).update(current_inventory: current_inventory)

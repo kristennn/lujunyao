@@ -55,7 +55,7 @@
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= commodity.selling_price %>元</td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= (trading_record.discount * 100) %>%</td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= (commodity.selling_price) * (trading_record.discount) %>元</td>
-                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.total_amount %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.total_amount %>元</td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.operator %></td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
                 <td><%= link_to("修改", show_edit_modal_trading_records_path(trading_record_id: trading_record.id), remote: true, "data-toggle" => "modal", "data-target" => "#editModal", class:"btn btn-primary btn-xs") %></td>
@@ -67,7 +67,6 @@
     </div>
   </div>
  </div>
-
 
 <div id="showEditModal">
   <%= render 'show_edit_modal' %>
