@@ -28,6 +28,7 @@
             <tr>
               <th>商品名称</th>
               <th>商品编码</th>
+              <th>当前库存</th>
               <th>员工名称</th>
               <th>员工工号</th>
               <th>交易数量</th>
@@ -47,6 +48,7 @@
               <tr>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= commodity.name %></td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= commodity.commodity_code %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= CommodityCurrentInventory.find_by(commodity_id: commodity.id).current_inventory %></td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= employee.name %></td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= employee.job_number %></td>
                 <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.quantity %><%= commodity.unit %></td>

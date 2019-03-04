@@ -25,7 +25,7 @@ class CommoditiesController < ApplicationController
     else
       @commodity = Commodity.new(commodity_params)
       @commodity.save!
-      CommodityInventory.create(commodity_id: @commodity.id, quantity: 0)
+      CommodityCurrentInventory.create(commodity_id: @commodity.id, current_inventory: 0)
       flash[:notice] = "新增成功"
     end
     redirect_to commodities_path

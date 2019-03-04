@@ -36,9 +36,9 @@ class TradingRecordsController < ApplicationController
       discount = params[:trading]["#{commodity_id}"]["discount"]
       price = (Commodity.find(commodity_id).selling_price) * discount.to_f
       total_amount = price * quantity.to_i
-      commodity_inventory = CommodityInventory.where(commodity_id: commodity_id).last
+      com_cur_inven = CommodityCurrnetInventory.find_by(commodity_id: commodity_id)
       wage = Wage.where(employee_id: employee_id).last
-      if quantity.to_i > commodity_inventory.current_inventory
+      if quantity.to_i > com_cur_inven.current_inventory
         commodity_ids << commodity_id
         error[1] = commodity_ids       
       elsif total_amount > wage.accumulative_virtual_money
@@ -62,13 +62,14 @@ class TradingRecordsController < ApplicationController
         discount = params[:trading]["#{commodity_id}"]["discount"]
         price = (Commodity.find(commodity_id).selling_price) * discount.to_f
         total_amount = price * quantity.to_i
-        commodity_inventory = CommodityInventory.where(commodity_id: commodity_id).last
+        com_cur_inven = CommodityCurrnetInventory.find_by(commodity_id: commodity_id)
         wage = Wage.where(employee_id: employee_id).last
         #录入交易记录
         TradingRecord.create(commodity_id: commodity_id, employee_id: employee_id, discount_price: price, quantity: quantity, discount: discount, total_amount: total_amount)    
         #减少商品的库存
-        current_inventory = commodity_inventory.current_inventory - quantity.to_i
-        CommodityInventory.create(commodity_id: commodity_id, operate_type: "出库", quantity: quantity, current_inventory: current_inventory, operator: current_user.name, year: Time.now.year, month: Time.now.month)
+        current_inventory = com_cur_inven.current_inventory - quantity.to_i
+        CommodityInventory.create(commodity_id: commodity_id, trading_id: TradingRecord.last.id, operate_type: "出库", quantity: quantity, operator: current_user.name, year: Time.now.year, month: Time.now.month)
+        com_cur_inven.update(current_inventory: current_inventory)
         #减少员工的易货币   
         net_virtual_money = wage.net_virtual_money + total_amount
         remaining_virtual_money = wage.accumulative_virtual_money - total_amount
@@ -80,13 +81,38 @@ class TradingRecordsController < ApplicationController
   end
 
   def update
+    trading_record = TradingRecord.find(params[:trading_record_id])
+    employee = Employee.find(params[:employee_id])
+    old_inventory = CommodityCurrentInventory.find_by(commodity_id: trading_record.commodity_id).current_inventory
+    current_inventory = old_inventory + trading_record.quantity - params[:quantity].to_i
+    #添加修改记录
+    transfer_columns = {
+      "discount" => "折扣", 
+      "quantity" => "交易数量", 
+      "employee_id" => "员工姓名"
+    }
+    trading_attributes = trading_record.attributes
+    transfer_columns.each do |column|
+      if (trading_attributes["#{column[0]}"] != params[column[0]])
+        if column[0] == "employee_id"
+          UpdateEvent.create(stuff_id: trading_record.id, table_name: "trading_records", field_name: "#{column[1]}", field_old_value: "#{Employee.find(trading_attributes[column[0]]).name}", field_new_value: "#{Employee.find(params[column[0]]).name}")
+        else
+          UpdateEvent.create(stuff_id: trading_record.id, table_name: "trading_records", field_name: "#{column[1]}", field_old_value: "#{trading_attributes[column[0]]}", field_new_value: "#{params[column[0]]}")
+        end     
+      end
+    end
+    #更新交易记录
+    trading_record.update(employee_id: employee.id, discount: params[:discount], quantity: params[:quantity])
+    #更新出库记录及当前库存
+    CommodityInventory.find_by(trading_id: params[:trading_record_id]).update(quantity: params[:quantity])
+    CommodityCurrentInventory.find_by(commodity_id: trading_record.commodity_id).update(current_inventory: current_inventory)
     
     flash[:notice] = "修改成功"
     redirect_to trading_records_path
   end
-  #1. 更新交易记录
-  #2. 更新出库记录
-  #3. 添加修改记录
+  
+ 
+  
 
   def show_edit_modal
     @trading_record = TradingRecord.find(params[:trading_record_id])

@@ -29,19 +29,22 @@ class CommodityInventoriesController < ApplicationController
   end
 
   def create
-    if CommodityInventory.where(commodity_id: params[:commodity_id]).present?
-      old_inventory = CommodityInventory.where(commodity_id: params[:id]).last.current_inventory
+    com_cur_inven = CommodityCurrentInventory.find_by(commodity_id: params[:commodity_id])
+    if com_cur_inven.present?
+      old_inventory = com_cur_inven.current_inventory
     else
       old_inventory = 0
     end
     current_inventory = old_inventory + params[:quantity].to_i
-    CommodityInventory.create(commodity_id: params[:commodity_id], quantity: params[:quantity],current_inventory: current_inventory, freight: params[:freight], operate_type: "入库", year: Time.now.year, month: Time.now.month, operator: current_user.name)
+    CommodityInventory.create(commodity_id: params[:commodity_id], quantity: params[:quantity], freight: params[:freight], operate_type: "入库", year: Time.now.year, month: Time.now.month, operator: current_user.name)
+    com_cur_inven.update(current_inventory: current_inventory)
     flash[:notice] = "入库操作成功"
     redirect_to commodity_inventories_path
   end
 
   def update
     commodity_inventory = CommodityInventory.find(params[:commodity_inventory_id])
+    com_cur_inven = CommodityCurrentInventory.find_by(commodity_id: commodity_inventory.commodity_id)
     transfer_columns = {
       "quantity" => "入库数量", 
       "freight" => "运费"
@@ -52,9 +55,10 @@ class CommodityInventoriesController < ApplicationController
         UpdateEvent.create(stuff_id: commodity_inventory.id, table_name: "commodity_inventories", field_name: "#{column[1]}", field_old_value: "#{inventory_attributes[column[0]]}", field_new_value: "#{params[column[0]]}")
       end
     end  
-    old_inventory = commodity_inventory.current_inventory - commodity_inventory.quantity
+    old_inventory = com_cur_inven.current_inventory - commodity_inventory.quantity
     current_inventory = old_inventory + params[:quantity].to_i
-    commodity_inventory.update(quantity: params[:quantity], current_inventory: current_inventory, freight: params[:freight])
+    commodity_inventory.update(quantity: params[:quantity], freight: params[:freight])
+    com_cur_inven.update(current_inventory: current_inventory)
     flash[:notice] = "修改成功"
     redirect_to commodity_inventory_path(commodity_inventory.commodity_id)
   end

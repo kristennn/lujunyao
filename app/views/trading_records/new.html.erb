@@ -42,7 +42,7 @@
                 <tr>
                   <td><%= commodity.commodity_code %></td>
                   <td><%= commodity.name %></td>
-                  <td><%= CommodityInventory.where(commodity_id: commodity.id).last.current_inventory %></td>
+                  <td><%= CommodityCurrentInventory.find_by(commodity_id: commodity.id).current_inventory %></td>
                   <td><%= commodity.unit %></td>
                   <td><%= commodity.standard %></td>
                   <td><%= commodity.selling_price %></td>

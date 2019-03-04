@@ -23,7 +23,8 @@
                 </li>
                 <li>
                   <%= label_tag "员工姓名：" %>
-                  <%= select_tag(:employee_name, options_for_select(Employee.all.collect{ |u| u.name }), {:prompt => "请选择", :required => "true"}) %>
+                  <%= select_tag(:employee_id, options_for_select(Employee.all.collect{ |u| [u.name, u.id] }), {:prompt => "请选择", :required => "true"}) %>
+                  <%= hidden_field_tag :trading_record_id, @trading_record.id %>
                 </li>
               </ul>
             </div>

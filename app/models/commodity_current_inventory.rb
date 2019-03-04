@@ -1,0 +1,2 @@
+class CommodityCurrentInventory < ApplicationRecord
+end
