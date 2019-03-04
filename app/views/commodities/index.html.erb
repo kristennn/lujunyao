@@ -37,15 +37,16 @@
             <% @commodities.each do |commodity| %>
               <tr class="row-click-able" data-url="/commodities/<%= commodity.id%>">
                 <td><%= commodity.commodity_code %></td>
+                <td><%= commodity.name %></td>
                 <td><%= commodity.commodity_type_name %></td>
                 <td><%= commodity.commodity_type_code %></td>
-                <td><%= commodity.name %></td>
                 <td><%= commodity.unit %></td>
                 <td><%= commodity.standard %></td>
                 <td><%= commodity.purchase_price %></td>
                 <td><%= commodity.selling_price %></td>
                 <td>
                   <%= link_to("修改", edit_commodity_path(commodity.id),class:"btn btn-primary btn-xs") %>
+                  <%= link_to("删除", commodity_path(commodity.id), method: :delete, data: {confirm: "确定要删除#{commodity.name}吗？"} ,class:"btn btn-primary btn-xs") %>
                 </td>
               </tr>
             <% end %>

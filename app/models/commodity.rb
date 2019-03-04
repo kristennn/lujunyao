@@ -28,6 +28,7 @@ class Commodity < ApplicationRecord
       commodity.attributes = row
       if commodity.name.present? and commodity.unit.present? and commodity.standard.present? and commodity.purchase_price.present? and commodity.selling_price.present?
         commodity.save!
+        CommodityCurrentInventory.create(commodity_id: commodity.id, current_inventory: 0)
       else
         message[:name] = "商品名称、计量单位、规格型号、进货价与销售价不得为空，请检查后再上传"
       end

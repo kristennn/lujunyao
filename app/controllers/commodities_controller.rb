@@ -56,6 +56,14 @@ class CommoditiesController < ApplicationController
     redirect_to commodities_path
   end
 
+  def destroy
+    commodity = Commodity.find(params[:id])
+    commodity.destroy
+    CommodityCurrentInventory.find_by(commodity_id: params[:id]).delete
+    flash[:notice] = "已将该商品删除"
+    redirect_to commodities_path
+  end
+
   def import_commodity
     if !params[:file].present?
       flash[:alert] = "您还没有选择文件哦"

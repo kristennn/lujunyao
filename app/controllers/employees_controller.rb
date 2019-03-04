@@ -54,6 +54,13 @@ class EmployeesController < ApplicationController
     redirect_to employees_path
   end
 
+  def destroy
+    employee = Employee.find(params[:id])
+    employee.destroy
+    flash[:notice] = "已将该人员删除"
+    redirect_to employees_path
+  end
+
   def import_employee
     if !params[:file].present?
       flash[:alert] = "您还没有选择文件哦"
