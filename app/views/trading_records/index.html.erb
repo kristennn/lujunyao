@@ -51,7 +51,7 @@
                 <td><%= employee.job_number %></td>
                 <td><%= trading_record.quantity %><%= commodity.unit %></td>
                 <td><%= commodity.selling_price %>元</td>
-                <td><%= (trading_record.discount * 100).to_i %>%</td>
+                <td><%= (trading_record.discount * 100) %>%</td>
                 <td><%= (commodity.selling_price) * (trading_record.discount) %>元</td>
                 <td><%= trading_record.total_amount %></td>
                 <td><%= trading_record.operator %></td>

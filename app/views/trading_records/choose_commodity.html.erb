@@ -39,6 +39,7 @@
                 <th>商品名称</th>
                 <th>商品种类编码</th>
                 <th>商品种类名称</th>
+                <th>当前库存</th>
                 <th>计量单位</th>
                 <th>规格型号</th>
                 <th>销售价</th>
@@ -54,6 +55,7 @@
                   <td><%= commodity.name %></td>
                   <td><%= commodity.commodity_type_code %></td>
                   <td><%= commodity.commodity_type_name %></td>
+                  <td><%= CommodityInventory.where(commodity_id: commodity.id).last.current_inventory %></td>
                   <td><%= commodity.unit %></td>
                   <td><%= commodity.standard %></td>
                   <td><%= commodity.selling_price %></td>
