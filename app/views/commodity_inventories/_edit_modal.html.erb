@@ -20,6 +20,7 @@
                 <li>
                   <%= label_tag "运费：" %>
                   <%= text_field_tag :freight, nil, required: true %>
+                  <%= hidden_field_tag :commodity_inventory_id, @commodity_inventory.id %>
                 </li>
               </ul>
             </div>

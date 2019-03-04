@@ -29,20 +29,19 @@ class CommodityInventoriesController < ApplicationController
   end
 
   def create
-    if CommodityInventory.where(commodity_id: params[:id]).present?
+    if CommodityInventory.where(commodity_id: params[:commodity_id]).present?
       old_inventory = CommodityInventory.where(commodity_id: params[:id]).last.current_inventory
     else
       old_inventory = 0
     end
     current_inventory = old_inventory + params[:quantity].to_i
-    commodity_inventory = CommodityInventory.new(commodity_id: params[:id], quantity: params[:quantity],current_inventory: current_inventory, freight: params[:freight], operate_type: "入库", year: Time.now.year, month: Time.now.month, operator: current_user.name)
-    commodity_inventory.save!
+    CommodityInventory.create(commodity_id: params[:commodity_id], quantity: params[:quantity],current_inventory: current_inventory, freight: params[:freight], operate_type: "入库", year: Time.now.year, month: Time.now.month, operator: current_user.name)
     flash[:notice] = "入库操作成功"
     redirect_to commodity_inventories_path
   end
 
   def update
-    commodity_inventory = CommodityInventory.find(params[:id])
+    commodity_inventory = CommodityInventory.find(params[:commodity_inventory_id])
     transfer_columns = {
       "quantity" => "入库数量", 
       "freight" => "运费"
