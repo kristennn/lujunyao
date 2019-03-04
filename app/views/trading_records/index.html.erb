@@ -45,17 +45,17 @@
               <% commodity = Commodity.find(trading_record.commodity_id) %>
               <% employee = Employee.find(trading_record.employee_id) %>
               <tr>
-                <td><%= commodity.name %></td>
-                <td><%= commodity.commodity_code %></td>
-                <td><%= employee.name %></td>
-                <td><%= employee.job_number %></td>
-                <td><%= trading_record.quantity %><%= commodity.unit %></td>
-                <td><%= commodity.selling_price %>元</td>
-                <td><%= (trading_record.discount * 100) %>%</td>
-                <td><%= (commodity.selling_price) * (trading_record.discount) %>元</td>
-                <td><%= trading_record.total_amount %></td>
-                <td><%= trading_record.operator %></td>
-                <td><%= trading_record.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= commodity.name %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= commodity.commodity_code %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= employee.name %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= employee.job_number %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.quantity %><%= commodity.unit %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= commodity.selling_price %>元</td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= (trading_record.discount * 100) %>%</td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= (commodity.selling_price) * (trading_record.discount) %>元</td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.total_amount %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.operator %></td>
+                <td class="row-click-able" data-url="/trading_records/<%= trading_record.id%>"><%= trading_record.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
                 <td><%= link_to("修改", show_edit_modal_trading_records_path(trading_record_id: trading_record.id), remote: true, "data-toggle" => "modal", "data-target" => "#editModal", class:"btn btn-primary btn-xs") %></td>
               </tr>
             <% end %>

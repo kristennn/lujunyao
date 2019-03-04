@@ -13,6 +13,11 @@ class TradingRecordsController < ApplicationController
     end
   end
 
+  def show
+    @trading_record = TradingRecord.find(params[:id])
+    @update_events = UpdateEvent.where(table_name: "trading_events", stuff_id: @trading_record.id)
+  end
+
   def new
     @commodities = Commodity.where(id: params[:commodity_id])
     @trading_record = TradingRecord.new
@@ -75,7 +80,7 @@ class TradingRecordsController < ApplicationController
   end
 
   def update
-
+    
     flash[:notice] = "修改成功"
     redirect_to trading_records_path
   end
