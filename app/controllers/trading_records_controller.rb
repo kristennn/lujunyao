@@ -21,15 +21,25 @@ class TradingRecordsController < ApplicationController
 
   def create
     params[:trading].keys.each do |commodity_id|
-      trading_record = TradingRecord.create(commodity_id: commodity_id, quantity: params[:trading]["#{commodity_id}"]["quantity"], discount: params[:trading]["#{commodity_id}"]["discount"], employee_id: params[:trading]["#{commodity_id}"]["employee_id"])
-      flash[:notice] = "录入交易成功"
+      employee_id = params[:trading]["#{commodity_id}"]["employee_id"]
+      quantity = params[:trading]["#{commodity_id}"]["quantity"]
+      discount = params[:trading]["#{commodity_id}"]["discount"]
+      price = (Commodity.find(commodity_id).selling_price) * discount.to_f
+      total_amount = price * quantity.to_i
+      
+      #录入交易记录
+      TradingRecord.create(commodity_id: commodity_id, employee_id: employee_id, discount_price: price, quantity: quantity, discount: discount, total_amount: total_amount)    
+      #减少商品的库存
+      current_inventory = CommodityInventory.where(commodity_id: commodity_id).last.current_inventory - quantity.to_i
+      CommodityInventory.create(commodity_id: commodity_id, operate_type: "出库", quantity: quantity, current_inventory: current_inventory, operator: current_user.name, year: Time.now.year, month: Time.now.month)
+      #减少员工的易货币
+      wage = Wage.where(employee_id: employee_id).last
+      net_virtual_money = wage.net_virtual_money + total_amount
+      remaining_virtual_money = wage.accumulative_virtual_money - total_amount
+      wage.update(net_virtual_money: net_virtual_money, accumulative_virtual_money: remaining_virtual_money)
     end
-
-    
-    redirect_to choose_commodity_trading_records_path
-    #录入交易记录
-    #减少员工的钱
-    #减少商品的库存
+    flash[:notice] = "录入交易成功"   
+    redirect_to choose_commodity_trading_records_path    
   end
 
   def update

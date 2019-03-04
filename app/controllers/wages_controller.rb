@@ -24,7 +24,7 @@ class WagesController < ApplicationController
     if wage.present?
       flash[:warning] = "#{params[:wage]["employee_id"]}在#{params[:year]}年#{params[:month]}月的应发工资已录入，如需修改请使用修改功能"
     else
-      wage = Wage.new(employee_id: employee_id, year: params[:year], month: params[:month], gross_cash: params[:wage]["gross_cash"], gross_virtual_money: params[:wage]["gross_virtual_money"])
+      wage = Wage.new(employee_id: employee_id, year: params[:year], month: params[:month], gross_cash: params[:wage]["gross_cash"], gross_virtual_money: params[:wage]["gross_virtual_money"], accumulative_virtual_money: params[:wage]["gross_virtual_money"])
       wage.save!
       flash[:notice] = "录入工资成功"
     end 

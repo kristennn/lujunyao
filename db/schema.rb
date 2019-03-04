@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_091331) do
+ActiveRecord::Schema.define(version: 2019_03_04_022317) do
 
   create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_code", comment: "商品编码"
@@ -117,13 +117,12 @@ ActiveRecord::Schema.define(version: 2019_03_01_091331) do
 
   create_table "wages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "employee_id"
-    t.float "gross_salary", comment: "应发工资"
-    t.float "gross_cash", comment: "应发现金"
-    t.float "gross_virtual_money", comment: "应发易货币"
-    t.float "net_cash", comment: "实发现金"
-    t.float "net_virtual_money", comment: "实发易货币"
-    t.float "accumulative_cash", comment: "累计应发现金"
-    t.float "accumulative_virtual_money", comment: "累计应发易货币"
+    t.integer "gross_cash", default: 0, comment: "应发现金"
+    t.integer "gross_virtual_money", default: 0, comment: "应发易货币"
+    t.integer "net_cash", default: 0, comment: "实发现金"
+    t.integer "net_virtual_money", default: 0, comment: "实发易货币"
+    t.integer "accumulative_cash", default: 0, comment: "累计应发现金"
+    t.integer "accumulative_virtual_money", default: 0, comment: "累计应发易货币"
     t.integer "year"
     t.integer "month"
     t.datetime "created_at", null: false
