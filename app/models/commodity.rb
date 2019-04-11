@@ -4,7 +4,7 @@ class Commodity < ApplicationRecord
   validates :name, uniqueness: true
   validates :unit, presence: true
   validates :standard, presence: true
-
+  validates :commodity_type_name, presence: true
 
   def self.import_table(file)
     
@@ -12,7 +12,7 @@ class Commodity < ApplicationRecord
       "商品名称" => "name",
       "商品编码" => "commodity_code",
       "商品种类编码" => "commodity_type_code",
-      "商品种类名称" => "commodity_type_name",
+      "商品类别" => "commodity_type_name",
       "计量单位" => "unit",
       "规格型号" => "standard",
       "入库数量" => "quantity",
@@ -54,7 +54,7 @@ class Commodity < ApplicationRecord
       
       commodity_inventory.attributes = inventory_datas.to_h
       
-      if commodity.name.present? and commodity.unit.present? and commodity.standard.present? and commodity_inventory.quantity.present?
+      if commodity.name.present? and commodity.unit.present? and commodity.standard.present? and commodity.commodity_type_name.present? and commodity_inventory.quantity.present?
         commodity.save!
         commodity_inventory.commodity_id = commodity.id
         commodity_inventory.save!
@@ -62,7 +62,7 @@ class Commodity < ApplicationRecord
         current_inventory = com_cur_inven.current_inventory + commodity_inventory.quantity
         com_cur_inven.update(commodity_id: commodity_inventory.commodity_id, produce_date: commodity_inventory.produce_date, current_inventory: current_inventory)
       else
-        message[:name] = "商品名称、计量单位、规格型号和入库数量不得为空，请检查后再上传"
+        message[:name] = "商品名称、计量单位、规格型号、商品类别和入库数量不得为空，请检查后再上传"
       end
     end
     return message

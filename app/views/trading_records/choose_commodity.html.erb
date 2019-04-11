@@ -7,11 +7,11 @@
       <h4>选择交易商品<%= params[:array] %></h4>
     </header>
 
-  <div class="content-body"> 
+  <div class="content-body">  
     <div class="panel">
       <div class="panel-heading" style="background-color: #fff;">
           <%= form_tag choose_commodity_trading_records_path, method: :get do%>
-            <label >请选择商品类型：</label>
+            <label >请选择商品类别：</label>
             <select class="form-control" name="commodity_type[]" id="commodity_select2" multiple="multiple" style="width:200px;height:20px;">
               <% @commodity_types.each do |commodity_type| %>
                 <option value="<%= commodity_type %>"><%= commodity_type%></option>
@@ -23,6 +23,7 @@
                 <option value="<%= commodity_name %>"><%= commodity_name%></option>
               <% end %>
             </select>
+            <br>
             <%= submit_tag :筛选 %>
           <% end %>
         <span style="float: right;"> 
@@ -37,7 +38,6 @@
                 <th>全选</th>
                 <th>商品编码</th>
                 <th>商品名称</th>
-                <th>商品种类编码</th>
                 <th>商品种类名称</th>
                 <th>当前库存</th>
                 <th>计量单位</th>
@@ -53,7 +53,6 @@
                   </td>
                   <td><%= commodity.commodity_code %></td>
                   <td><%= commodity.name %></td>
-                  <td><%= commodity.commodity_type_code %></td>
                   <td><%= commodity.commodity_type_name %></td>
                   <td><%= CommodityCurrentInventory.find_by(commodity_id: commodity.id).current_inventory %></td>
                   <td><%= commodity.unit %></td>

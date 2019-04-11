@@ -1,7 +1,19 @@
 class CommodityInventoriesController < ApplicationController
   layout 'home'
   def index
-    @commodities = Commodity.all
+    if params[:commodity_type].present? and params[:commodity_name].present?
+      @commodities = Commodity.where(commodity_type_name: params[:commodity_type], name: params[:commodity_name]) 
+    else
+      if params[:commodity_type].present?
+        @commodities = Commodity.where(commodity_type_name: params[:commodity_type])
+      elsif params[:commodity_name].present?
+        @commodities = Commodity.where(name: params[:commodity_name])
+      else
+        @commodities = Commodity.all
+      end
+    end  
+    @commodity_types = Commodity.pluck(:commodity_type_name).uniq.compact
+    @commodity_names = Commodity.pluck(:name).uniq.compact
   end
 
   def show

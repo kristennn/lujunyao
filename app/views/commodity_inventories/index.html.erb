@@ -10,9 +10,26 @@
     <div class="content-body">
       <div class="panel">
         <div class="panel-heading" style="background-color: #fff;">
+          <%= form_tag commodity_inventories_path, method: :get do%>
+            <label >请选择商品类别：</label>
+            <select class="form-control" name="commodity_type[]" id="commodity_select2" multiple="multiple" style="width:200px;height:20px;">
+              <% @commodity_types.each do |commodity_type| %>
+                <option value="<%= commodity_type %>"><%= commodity_type%></option>
+              <% end %>
+            </select>
+            <label >请选择商品名称：</label>
+            <select class="form-control" name="commodity_name[]" id="commodity_select2" multiple="multiple" style="width:200px;height:20px;">
+              <% @commodity_names.each do |commodity_name| %>
+                <option value="<%= commodity_name %>"><%= commodity_name%></option>
+              <% end %>
+            </select>
+            <br>
+            <%= submit_tag :筛选 %>
+          <% end %>
+
           <span style="display:inline-block;">
           </span>
-          <span style="float: right;"> 
+          <span style="float: right;">
             <%= link_to("导入库存表", "#", class:"btn btn-primary-upload pull-right", "data-toggle" => "modal", "data-target" => "#uploadModal") %>
           </span>
         </div> 
@@ -21,7 +38,7 @@
         <table>
           <thead> 
             <tr>
-              <th>商品编码</th>
+              <th>商品类别</th>
               <th>商品名称</th>
               <th>保质期</th>
               <th>生产日期</th>
@@ -39,7 +56,7 @@
               <% product_dates = CommodityInventory.where(commodity_id: commodity.id).pluck(:produce_date).uniq %>
               <% product_dates.each do |date| %>
                 <tr>
-                  <td><%= commodity.commodity_code %></td>
+                  <td><%= commodity.commodity_type_name %></td>
                   <td><%= commodity.name %></td>                 
                   <td><%= inventory.warranty_period %>天</td>
                   <td><%= date.to_datetime.strftime("%Y年%m月%d日") %></td>
@@ -52,7 +69,10 @@
                 </tr>
               <% end %>
             <% end %>
-            <td>统计: <%=  %></td>
+            <% total_inventory = CommodityCurrentInventory.where(commodity_id: @commodities.pluck(:id)).sum(:current_inventory) %>
+            <td>统计</td>
+            <th></th><th></th><th></th><th></th><th></th><th></th>
+            <th><%= total_inventory %></th>
           </tbody>
         </table>      
       </div>
