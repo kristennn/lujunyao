@@ -16,7 +16,9 @@ class Commodity < ApplicationRecord
       "计量单位" => "unit",
       "规格型号" => "standard",
       "入库数量" => "quantity",
-      "经办人" => "operator"
+      "经办人" => "operator",
+      "生产日期" => "produce_date",
+      "保质期" => "warranty_period"
       # "进货价" => "purchase_price",
       # "销售价" => "selling_price"
     }
@@ -24,7 +26,7 @@ class Commodity < ApplicationRecord
     spreadsheet = Roo::Spreadsheet.open(file.path)
     message = Hash.new
     header = spreadsheet.row(1).map{ |i| head_transfer[i]}
-    inventory_headers = ["quantity", "operator"]
+    inventory_headers = ["quantity", "operator", "produce_date", "warranty_period"]
     inventory_datas = []
     inventory_datas = {
       "operate_type" => "入库",
@@ -42,15 +44,23 @@ class Commodity < ApplicationRecord
         end 
       end
       commodity.attributes = row
+      if inventory_datas.to_h["produce_date"] == nil
+        if inventory_datas.to_h["warranty_period"] == nil
+          inventory_datas << ["produce_date", "20300101"]
+          inventory_datas << ["warranty_period", 0]
+        end
+        inventory_datas << ["warranty_period", 0]
+      end
+      
       commodity_inventory.attributes = inventory_datas.to_h
       
       if commodity.name.present? and commodity.unit.present? and commodity.standard.present? and commodity_inventory.quantity.present?
         commodity.save!
         commodity_inventory.commodity_id = commodity.id
         commodity_inventory.save!
-        com_cur_inven = CommodityCurrentInventory.find_by(commodity_id: commodity.id) || CommodityCurrentInventory.new
+        com_cur_inven = CommodityCurrentInventory.find_by(commodity_id: commodity_inventory.commodity_id, produce_date: commodity_inventory.produce_date) || CommodityCurrentInventory.new
         current_inventory = com_cur_inven.current_inventory + commodity_inventory.quantity
-        com_cur_inven.update(commodity_id: commodity.id, current_inventory: current_inventory)
+        com_cur_inven.update(commodity_id: commodity_inventory.commodity_id, produce_date: commodity_inventory.produce_date, current_inventory: current_inventory)
       else
         message[:name] = "商品名称、计量单位、规格型号和入库数量不得为空，请检查后再上传"
       end

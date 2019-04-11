@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_094348) do
+ActiveRecord::Schema.define(version: 2019_04_11_080541) do
 
   create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_code", comment: "商品编码"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2019_04_10_094348) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "current_inventory", default: 0
+    t.string "produce_date", default: "2100101", comment: "生产日期"
   end
 
   create_table "commodity_inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -43,6 +44,8 @@ ActiveRecord::Schema.define(version: 2019_04_10_094348) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "trading_id"
+    t.string "produce_date", default: "2100101", comment: "生产日期"
+    t.integer "warranty_period", default: 0, comment: "保质期"
   end
 
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
