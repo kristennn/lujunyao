@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_04_055410) do
+ActiveRecord::Schema.define(version: 2019_04_10_094348) do
 
   create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_code", comment: "商品编码"
@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 2019_03_04_055410) do
 
   create_table "commodity_current_inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_id"
-    t.integer "current_inventory"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "current_inventory", default: 0
   end
 
   create_table "commodity_inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

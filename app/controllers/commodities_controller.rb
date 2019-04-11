@@ -68,15 +68,18 @@ class CommoditiesController < ApplicationController
     if !params[:file].present?
       flash[:alert] = "您还没有选择文件哦"
     else
-      message = Commodity.import_table(params[:file])
-      if message[:name].present?
-        flash[:alert] = "#{message[:name]}"
-      else
-        Commodity.import_table(params[:file])
-        flash[:notice] = "上传成功"
-      end
+    Commodity.import_table(params[:file])
+    flash[:notice] = "上传成功"
+      # message = Commodity.import_table(params[:file])
+      # if message[:name].present?
+      #   flash[:alert] = "#{message[:name]}"
+      # else
+      #   Commodity.import_table(params[:file])
+      #   flash[:notice] = "上传成功"
+      # end
     end
-    redirect_to commodities_path
+    
+    redirect_to commodity_inventories_path
   end
 
   private

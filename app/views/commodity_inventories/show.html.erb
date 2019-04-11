@@ -23,7 +23,6 @@
               <th>规格型号</th>
               <th>操作类型</th>
               <th>操作数量</th>
-              <th>剩余库存</th>
               <th>经办人</th>
               <th>时间</th>
               <th>操作</th>
@@ -39,7 +38,6 @@
                     <td><%= @commodity.standard %></td>
                     <td><%= commodity_inventory.operate_type %></td>
                     <td><%= commodity_inventory.quantity %><%= @commodity.unit %></td>
-                    <td><%= CommodityCurrentInventory.find_by(commodity_id: commodity_inventory.commodity_id).current_inventory %><%= @commodity.unit %></td>
                     <td><%= commodity_inventory.operator %></td>
                     <td><%= commodity_inventory.created_at.to_datetime.strftime("%Y年%m月%d日%H时%M分") %></td>
                     <% if commodity_inventory.operate_type == "入库" %>

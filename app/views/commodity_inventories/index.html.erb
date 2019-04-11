@@ -7,7 +7,16 @@
       <h4>货品库存页面</h4>
     </header>
 
-    <div class="content-body"> 
+    <div class="content-body">
+      <div class="panel">
+        <div class="panel-heading" style="background-color: #fff;">
+          <span style="display:inline-block;">
+          </span>
+          <span style="float: right;"> 
+            <%= link_to("导入库存表", "#", class:"btn btn-primary-upload pull-right", "data-toggle" => "modal", "data-target" => "#uploadModal") %>
+          </span>
+        </div> 
+      </div> 
       <div class="content-table" style="clear:both;">
         <table>
           <thead>
@@ -17,7 +26,7 @@
               <th>计量单位</th>
               <th>规格型号</th>
               <th>当前库存</th>
-              <th>操作</th>
+              <!--  <th>操作</th> -->
               <th>出入库记录</th>
             </tr>
           </thead>
@@ -29,7 +38,7 @@
                 <td><%= commodity.unit %></td>
                 <td><%= commodity.standard %></td>
                 <td><%= CommodityCurrentInventory.find_by(commodity_id: commodity.id).current_inventory  %></td>
-                <td><%= link_to("入库", show_modal_commodity_inventories_path(commodity_id: commodity.id), remote: true, "data-toggle" => "modal", "data-target" => "#myModal",class:"btn btn-primary btn-xs") %></td>
+                <!--  <td><%= link_to("入库", show_modal_commodity_inventories_path(commodity_id: commodity.id), remote: true, "data-toggle" => "modal", "data-target" => "#myModal",class:"btn btn-primary btn-xs") %></td> -->
                 <td><%= link_to("查看记录", commodity_inventory_path(commodity.id), class:"btn btn-primary btn-xs") %></td>
               </tr>
             <% end %>
@@ -41,6 +50,37 @@
  </div>
 
 
+<!-- 
 <div id="showModal">
   <%= render 'show_modal' %>
 </div>
+-->
+
+<!-- 上传表格弹框代码-开始 -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h4 class="modal-title" id="myModalLabel">
+          上传商品库存表
+        </h4>
+      </div>
+      <div class="modal-body">      
+        <%= form_tag import_commodity_commodities_path, method: 'post', multipart: true do %>
+          <div class="star_import_model_file_style">
+            <ul class ="star_import_model">
+              <li>
+                <%= file_field_tag :file,required: true %>
+              </li>
+            </ul>
+          </div>
+          <div class="" style="">
+             <%= submit_tag :点击确定,:data => {disable_with: "附件上传中 ... "},:class => "btn btn-primary-status" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 上传表格弹框代码-结束 -->
