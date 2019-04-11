@@ -11,6 +11,7 @@
     <div class="panel">
       <div class="panel-heading" style="background-color: #fff;">
           <%= form_tag choose_commodity_trading_records_path, method: :get do%>
+            <div style="display: flex;">
             <label >请选择商品类别：</label>
             <select class="form-control" name="commodity_type[]" id="commodity_select2" multiple="multiple" style="width:200px;height:20px;">
               <% @commodity_types.each do |commodity_type| %>
@@ -23,7 +24,7 @@
                 <option value="<%= commodity_name %>"><%= commodity_name%></option>
               <% end %>
             </select>
-            <br>
+            </div>
             <%= submit_tag :筛选 %>
           <% end %>
         <span style="float: right;"> 

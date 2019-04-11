@@ -14,6 +14,12 @@ class CommodityInventoriesController < ApplicationController
     end  
     @commodity_types = Commodity.pluck(:commodity_type_name).uniq.compact
     @commodity_names = Commodity.pluck(:name).uniq.compact
+
+    # respond_to do |format|
+    #   format.html
+    #   format.csv { send_data @commodities.to_csv }
+    #   format.xls { headers["Content-Disposition"] = 'attachment; filename="易货库存表.xls"'}
+    # end
   end
 
   def show
