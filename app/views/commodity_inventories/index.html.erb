@@ -5,6 +5,8 @@
   <div class="panel panel-body">
     <header style="text-align: center">
       <h4>货品库存页面</h4>
+      <p>已选类别：<%= @type %></p>
+      <p>已选商品：<%= @name %></p>
     </header>
 
     <div class="content-body">
@@ -13,7 +15,7 @@
           <%= form_tag commodity_inventories_path, method: :get do%>
             <div style="display: flex; align-items: center;">
             <label >请选择商品类别：</label>
-            <select class="form-control" name="commodity_type[]" id="commodity_select2" multiple="multiple" style="width:200px;height:20px;">
+            <select class="form-control" name="commodity_type" style="width:200px;height:35px;">
               <% @commodity_types.each do |commodity_type| %>
                 <option value="<%= commodity_type %>"><%= commodity_type%></option>
               <% end %>
@@ -31,8 +33,20 @@
           <span style="display:inline-block;">
           </span>
           <span>
-            <!-- <%= link_to("导入库存表", "#", class:"btn btn-primary-upload pull-right", "data-toggle" => "modal", "data-target" => "#uploadModal") %> -->
-            <%= link_to("下载库存表", commodity_inventories_path(format: "xls"), class:"btn btn-primary-upload pull-right") %>
+            <%= link_to("导入库存表", "#", class:"btn btn-primary-upload pull-right", "data-toggle" => "modal", "data-target" => "#uploadModal") %>
+            <%= link_to("下载库存表", commodity_inventories_path(type: @type, commodity_ids: @commodities.pluck(:id), format: "xls"), class:"btn btn-primary-upload pull-right") %>
+            
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary-upload dropdown-toggle" data-toggle="dropdown">
+                下载表格
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                <li><%= link_to '下载表格模板', download_template_commodity_inventories_path(type: @type, commodity_ids: @commodities.pluck(:id), format: "xls") %></li>
+                <li><%= link_to "下载库存数据", commodity_inventories_path(type: @type, commodity_ids: @commodities.pluck(:id), format: "xls") %></li>
+              </ul>
+            </div>
+
           </span>
         </div> 
       </div> 
@@ -42,9 +56,11 @@
             <tr>
               <th>商品类别</th>
               <th>商品名称</th>
-              <th>保质期</th>
-              <th>生产日期</th>
-              <th>剩余天数</th>
+              <% if !(@type == "服装类") %>
+                <th>保质期</th>
+                <th>生产日期</th>
+                <th>剩余天数</th>
+              <% end %>
               <th>计量单位</th>
               <th>规格型号</th>
               <th>当前库存</th>
@@ -59,10 +75,12 @@
               <% product_dates.each do |date| %>
                 <tr>
                   <td><%= commodity.commodity_type_name %></td>
-                  <td><%= commodity.name %></td>                 
-                  <td><%= inventory.warranty_period %>天</td>
-                  <td><%= date.to_datetime.strftime("%Y年%m月%d日") %></td>
-                  <td><%= (inventory.warranty_period - (Time.now - date.to_datetime)/60/60/24).round %>天</td>
+                  <td><%= commodity.name %></td>   
+                  <% if !(@type == "服装类") %>              
+                    <td><%= inventory.warranty_period %>天</td>
+                    <td><%= date.to_datetime.strftime("%Y年%m月%d日") %></td>
+                    <td><%= (inventory.warranty_period - (Time.now - date.to_datetime)/60/60/24).round %>天</td>
+                  <% end %>
                   <td><%= commodity.unit %></td>
                   <td><%= commodity.standard %></td>
                   <td><%= CommodityCurrentInventory.find_by(commodity_id: inventory.commodity_id, produce_date: date).current_inventory  %></td>
@@ -72,7 +90,6 @@
               <% end %>
             <% end %>
             <% total_inventory = CommodityCurrentInventory.where(commodity_id: @commodities.pluck(:id)).sum(:current_inventory) %>
-
             <tr>
             <td style="font-weight: 700">库存合计</td>
             <td colspan="7"><%= total_inventory %></td>            

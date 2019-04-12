@@ -46,7 +46,7 @@ class Commodity < ApplicationRecord
       commodity.attributes = row
       if inventory_datas.to_h["produce_date"] == nil
         if inventory_datas.to_h["warranty_period"] == nil
-          inventory_datas << ["produce_date", "20300101"]
+          inventory_datas << ["produce_date", "30000101"]
           inventory_datas << ["warranty_period", 0]
         end
         inventory_datas << ["warranty_period", 0]

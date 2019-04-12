@@ -2,22 +2,27 @@ class CommodityInventoriesController < ApplicationController
   layout 'home'
   def index
     if params[:commodity_type].present? and params[:commodity_name].present?
+      @type = params[:commodity_type]
+      @name = params[:commodity_name]
       @commodities = Commodity.where(commodity_type_name: params[:commodity_type], name: params[:commodity_name]) 
     else
       if params[:commodity_type].present?
+        @type = params[:commodity_type]
         @commodities = Commodity.where(commodity_type_name: params[:commodity_type])
       elsif params[:commodity_name].present?
+        @name = params[:commodity_name]
         @commodities = Commodity.where(name: params[:commodity_name])
-      else
-        @commodities = Commodity.all
+      else     
+        @commodities = Commodity.where(commodity_type_name: (Commodity.pluck(:commodity_type_name).uniq.first))
       end
     end  
     @commodity_types = Commodity.pluck(:commodity_type_name).uniq.compact
     @commodity_names = Commodity.pluck(:name).uniq.compact
 
+    @export_commodities = Commodity.where(id: params[:commodity_ids])
     respond_to do |format|
       format.html
-      format.csv { send_data @commodities.to_csv }
+      format.csv { send_data [@export_commodities, @type].to_csv }
       format.xls { headers["Content-Disposition"] = 'attachment; filename="商品库存表.xls"'}
     end
   end
@@ -84,6 +89,15 @@ class CommodityInventoriesController < ApplicationController
   def update_event
     @commodity_inventory = CommodityInventory.find(params[:id])
     @update_events = UpdateEvent.where(table_name: "commodity_inventories", stuff_id: params[:id])
+  end
+
+  def download_template
+    @export_commodities = Commodity.where(id: params[:commodity_ids])
+    respond_to do |format|
+      format.html
+      format.csv { send_data [@export_commodities, @type].to_csv }
+      format.xls { headers["Content-Disposition"] = 'attachment; filename="商品上传模板.xls"'}
+    end
   end
 
 end

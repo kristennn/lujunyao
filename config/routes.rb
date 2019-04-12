@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     collection do
       get :show_modal
       get :edit_modal
+      get :download_template
     end
     member do
       get :update_event
