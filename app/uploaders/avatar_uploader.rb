@@ -6,15 +6,19 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
   storage :file
   # storage :fog
-
-  process resize_to_fill: [800, 800]
-
+ 
   version :thumb do
     process resize_to_fill: [200,200]
   end
 
   version :medium do
     process resize_to_fill: [400,400]
+  end
+  version :small do
+    process resize_to_fill: [100,100]
+  end
+  version :xsmall do
+    process resize_to_fill: [70,70]
   end
 
   # Override the directory where uploaded files will be stored.
