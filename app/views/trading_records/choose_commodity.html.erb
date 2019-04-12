@@ -36,30 +36,34 @@
           <table>
             <thead>
               <tr>
-                <th>全选</th>
-                <th>商品编码</th>
+                <th>全选</th>           
                 <th>商品名称</th>
-                <th>商品种类名称</th>
+                <th>商品类别</th>
+                <th>生产日期</th>
                 <th>当前库存</th>
                 <th>计量单位</th>
                 <th>规格型号</th>
-                <th>销售价</th>
+                <th>销售价</th> 
               </tr>
             </thead>
             <tbody>              
               <% @commodities.each do |commodity| %>
-                <tr>
-                  <td class="select-checkbox">
-                    <%= check_box_tag "commodity_id[]",commodity.id,false,class: "checkbox-body" %>
-                  </td>
-                  <td><%= commodity.commodity_code %></td>
-                  <td><%= commodity.name %></td>
-                  <td><%= commodity.commodity_type_name %></td>
-                  <td><%= CommodityCurrentInventory.find_by(commodity_id: commodity.id).current_inventory %></td>
-                  <td><%= commodity.unit %></td>
-                  <td><%= commodity.standard %></td>
-                  <td><%= commodity.selling_price %></td>
-                </tr>
+                <% inventory = CommodityInventory.find_by(commodity_id: commodity.id) %>
+                <% product_dates = CommodityInventory.where(commodity_id: commodity.id).pluck(:produce_date).uniq %>
+                <% product_dates.each do |date| %>
+                  <tr>
+                    <td class="select-checkbox">
+                      <%= check_box_tag "commodity_id[]",commodity.id,false,class: "checkbox-body" %>
+                    </td>
+                    <td><%= commodity.name %></td>
+                    <td><%= commodity.commodity_type_name %></td>
+                    <td><%= date.to_datetime.strftime("%Y年%m月%d日") %></td>
+                    <td><%= CommodityCurrentInventory.find_by(commodity_id: commodity.id).current_inventory %></td>
+                    <td><%= commodity.unit %></td>
+                    <td><%= commodity.standard %></td>
+                    <td><%= commodity.selling_price %></td>
+                  </tr>
+                <% end %>
               <% end %> 
             </tbody>
           </table>

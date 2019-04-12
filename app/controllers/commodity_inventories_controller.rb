@@ -13,7 +13,7 @@ class CommodityInventoriesController < ApplicationController
         @name = params[:commodity_name]
         @commodities = Commodity.where(name: params[:commodity_name])
       else     
-        @commodities = Commodity.where(commodity_type_name: (Commodity.pluck(:commodity_type_name).uniq.first))
+        @commodities = Commodity.all
       end
     end  
     @commodity_types = Commodity.pluck(:commodity_type_name).uniq.compact
