@@ -51,9 +51,20 @@ class CommoditiesController < ApplicationController
         end
       end
     end
-    @commodity.update(commodity_params)
-    flash[:notice] = "修改成功"
-    redirect_to commodities_path
+    if params["photos"] != nil 
+      if @commodity.photos.present?
+        @commodity.photos.detroy_all 
+      end           
+      params["photos"]["avatar"].each do |a|
+        @commodity.photos.create!(avatar: a)
+      end 
+      @commodity.update(commodity_params)
+      redirect_to commodities_path,notice: "更新成功!"
+    else 
+      @commodity.update(produt_params)
+      redirect_to commodities_path,notice: "更新成功!"
+    end 
+
   end
 
   def destroy
@@ -80,6 +91,7 @@ class CommoditiesController < ApplicationController
 
   def show_commodity
     @commodity = Commodity.find(params[:id]) 
+    @photos = @commodity.photos.all
   end
 
   private

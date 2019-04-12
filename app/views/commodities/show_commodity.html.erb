@@ -2,6 +2,21 @@
     <div class="panel">
         <div class="panel-body">
         <%= link_to "返回", commodities_path,class:"btn btn-success-alt"%>
+        <% if @photos.present? %>
+       <% @photos.each_with_index do |p, index| %>  
+
+         <% if index == 0 %>                        
+           <%= image_tag p.avatar.medium.url %>
+           <div style="letter-spacing: -8px">      
+         <% else %>
+           <%= image_tag p.avatar.thumb.url %>
+         <% end %>
+       <% end %>
+       </div>
+     <% else %>
+         <%= image_tag("http://placehold.it/400x400&text=No Pic", class: "thumbnail") %> 
+
+     <% end %>
         <div class="head-3fDND_0">
             <div class="info-2zzSp_0" style="background: #F8F8F9">
             <%= "商品基本信息"%>

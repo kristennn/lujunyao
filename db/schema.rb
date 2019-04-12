@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_080541) do
+ActiveRecord::Schema.define(version: 2019_04_12_102345) do
 
   create_table "commodities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "commodity_code", comment: "商品编码"
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(version: 2019_04_11_080541) do
     t.json "worktype", comment: "工种"
     t.json "duty", comment: "职务"
     t.json "department", comment: "部门"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "photos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "commodity_id"
+    t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

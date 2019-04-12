@@ -5,6 +5,9 @@ class Commodity < ApplicationRecord
   validates :unit, presence: true
   validates :standard, presence: true
   validates :commodity_type_name, presence: true
+  #多图上传
+  has_many :photos
+  accepts_nested_attributes_for :photos
 
   def self.import_table(file)
     
@@ -16,7 +19,7 @@ class Commodity < ApplicationRecord
       "计量单位" => "unit",
       "规格型号" => "standard",
       "入库数量" => "quantity",
-      "经办人" => "operator",
+      "经办人" => "operator", 
       "生产日期" => "produce_date",
       "保质期" => "warranty_period"
       # "进货价" => "purchase_price",

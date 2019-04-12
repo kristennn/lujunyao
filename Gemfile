@@ -44,6 +44,10 @@ gem 'pry'
 gem 'roo'
 gem 'roo-xls'
 
+#多图上传
+gem "mini_magick"
+gem 'carrierwave'
+
 #多选gem
 gem "select2-rails"
 
