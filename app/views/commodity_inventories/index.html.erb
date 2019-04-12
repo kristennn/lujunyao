@@ -27,12 +27,12 @@
             <%= submit_tag :筛选 %>
             </div>
           <% end %>
-
+ 
           <span style="display:inline-block;">
           </span>
           <span>
-            <%= link_to("导入库存表", "#", class:"btn btn-primary-upload pull-right", "data-toggle" => "modal", "data-target" => "#uploadModal") %>
-            <%= link_to("下载库存表", commodity_inventories_path, class:"btn btn-primary-upload pull-right",format: "xls") %>
+            <!-- <%= link_to("导入库存表", "#", class:"btn btn-primary-upload pull-right", "data-toggle" => "modal", "data-target" => "#uploadModal") %> -->
+            <%= link_to("下载库存表", commodity_inventories_path(format: "xls"), class:"btn btn-primary-upload pull-right") %>
           </span>
         </div> 
       </div> 
@@ -72,9 +72,11 @@
               <% end %>
             <% end %>
             <% total_inventory = CommodityCurrentInventory.where(commodity_id: @commodities.pluck(:id)).sum(:current_inventory) %>
-            <td>统计</td>
-            <th></th><th></th><th></th><th></th><th></th><th></th>
-            <th><%= total_inventory %></th>
+
+            <tr>
+            <td style="font-weight: 700">库存合计</td>
+            <td colspan="7"><%= total_inventory %></td>            
+          </tr>
           </tbody>
         </table>      
       </div>
