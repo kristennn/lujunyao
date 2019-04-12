@@ -24,9 +24,8 @@
         <table>
           <thead>
             <tr>
-              <th>商品编码</th>
               <th>商品名称</th>
-              <th>商品种类</th>
+              <th>商品类别</th>
               <th>计量单位</th>
               <th>规格型号</th>
               <th>进货价</th>
@@ -37,7 +36,6 @@
           <tbody>
             <% @commodities.each do |commodity| %>
               <tr class="row-click-able" data-url="/commodities/<%= commodity.id%>">
-                <td><%= commodity.commodity_code %></td>
                 <td><%= commodity.name %></td>
                 <td><%= commodity.commodity_type_name %></td>
                 <td><%= commodity.unit %></td>
@@ -45,6 +43,7 @@
                 <td><%= commodity.purchase_price %></td>
                 <td><%= commodity.selling_price %></td>
                 <td>
+                  <%= link_to("详情", show_commodity_commodity_path(commodity.id),class:"btn btn-primary btn-xs") %>
                   <%= link_to("修改", edit_commodity_path(commodity.id),class:"btn btn-primary btn-xs") %>
                   <%= link_to("删除", commodity_path(commodity.id), method: :delete, data: {confirm: "确定要删除#{commodity.name}吗？"} ,class:"btn btn-primary btn-xs") %>
                 </td>

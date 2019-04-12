@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     end
   end
   resources :commodities do
+    member do
+      get :show_commodity
+    end
     collection do
       post :import_commodity
     end

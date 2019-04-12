@@ -1,0 +1,50 @@
+<div class="contentpanel">
+    <div class="panel">
+        <div class="panel-body">
+        <%= link_to "返回", commodities_path,class:"btn btn-success-alt"%>
+        <div class="head-3fDND_0">
+            <div class="info-2zzSp_0" style="background: #F8F8F9">
+            <%= "商品基本信息"%>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+            <ul class="employee-list">
+                <li>
+                <span>商品名称：</span>
+                <%= @commodity.name %>
+                </li>
+                <li>商品种类名称：
+                <%= @commodity.commodity_type_name %>
+                </li>
+                
+                <li>计量单位：
+                <%= @commodity.unit %>
+                </li>
+                <li>进货价：
+                <%= @commodity.purchase_price %>
+                </li>  
+            </ul>
+            </div>
+            <div class="col-md-5">
+            <ul class="employee-list">
+                <li>商品编码：
+                <%= @commodity.commodity_code%>
+                </li>
+                <li>商品种类编码：
+                <%= @commodity.commodity_type_code %>
+                </li>
+                <li>规格型号：
+                <%= @commodity.standard %>
+                </li>
+                <li>销售价：
+                <%= @commodity.selling_price %>
+                </li> 
+            </ul>
+            </div>
+        </div> 
+        </div>
+    </div>
+</div>
+

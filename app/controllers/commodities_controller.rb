@@ -75,8 +75,11 @@ class CommoditiesController < ApplicationController
         flash[:notice] = "上传成功"
       end
     end
-    
     redirect_to commodity_inventories_path
+  end
+
+  def show_commodity
+    @commodity = Commodity.find(params[:id]) 
   end
 
   private
