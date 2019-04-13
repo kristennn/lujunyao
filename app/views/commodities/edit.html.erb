@@ -3,10 +3,6 @@
     <div class="panel">
       <div class="panel-body">
         <%= link_to "返回", commodities_path,class:"btn btn-success-alt"%>
-        <div class="group">
-          <%= f.label :avatar %><br>
-          <%= f.file_field :avatar, :multiple => true , name:"photos[avatar][]" %>
-        </div>
         <div class="head-3fDND_0">
           <div class="info-2zzSp_0" style="background: #F8F8F9">
             <%= "商品基本信息"%>
@@ -49,7 +45,11 @@
               </li> 
             </ul>
           </div>
-        </div> 
+        </div><br><br>
+        <div class="group" style="display:flex;justify-content:center">
+          <%= f.label :上传商品照片： %>
+          <%= f.file_field :avatar, :multiple => true , name:"photos[avatar][]" %>
+        </div>
         <div class="center-uRe1b_0">
           <br><br><br><br><br>
           <%= f.submit :确定修改, class:"btn button-success"%>
