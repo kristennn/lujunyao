@@ -29,6 +29,7 @@
           <Cell><Data ss:Type="String">保质期</Data></Cell>
           <Cell><Data ss:Type="String">生产日期</Data></Cell>
         <% end %>
+        <Cell><Data ss:Type="String">销售价</Data></Cell>
         <Cell><Data ss:Type="String">经办人</Data></Cell>
       </Row>
       <% @export_commodities.each do |commodity| %>
@@ -45,6 +46,7 @@
                 <Cell><Data ss:Type="String"><%= inventory.warranty_period %></Data></Cell>
                 <Cell><Data ss:Type="String"><%= date %></Data></Cell>
               <% end %>
+              <Cell><Data ss:Type="String"></Data></Cell>
               <Cell><Data ss:Type="String"></Data></Cell>
             </Row>
         <% end %>

@@ -21,9 +21,9 @@ class Commodity < ApplicationRecord
       "入库数量" => "quantity",
       "经办人" => "operator", 
       "生产日期" => "produce_date",
-      "保质期" => "warranty_period"
+      "保质期" => "warranty_period",
       # "进货价" => "purchase_price",
-      # "销售价" => "selling_price"
+      "销售价" => "selling_price"
     }
 
     spreadsheet = Roo::Spreadsheet.open(file.path)
@@ -57,7 +57,7 @@ class Commodity < ApplicationRecord
       
       commodity_inventory.attributes = inventory_datas.to_h
       
-      if commodity.name.present? and commodity.unit.present? and commodity.standard.present? and commodity.commodity_type_name.present? and commodity_inventory.quantity.present?
+      if commodity.name.present? and commodity.unit.present? and commodity.standard.present? and commodity.commodity_type_name.present? and commodity.selling_price.present? and commodity_inventory.quantity.present?
         commodity.save!
         commodity_inventory.commodity_id = commodity.id
         commodity_inventory.save!
