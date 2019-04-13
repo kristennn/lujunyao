@@ -126,10 +126,14 @@ class TradingRecordsController < ApplicationController
     @commodity_types = Commodity.pluck(:commodity_type_name).uniq.compact
     @commodity_names = Commodity.pluck(:name).uniq.compact
     if params[:commodity_type].present? && params[:commodity_name].present?
+      @type = params[:commodity_type]
+      @name = params[:commodity_name]
       @commodities = Commodity.where(commodity_type_name: params[:commodity_type], name: params[:commodity_name]) 
     elsif params[:commodity_type].present?
+      @type = params[:commodity_type]
       @commodities = Commodity.where(commodity_type_name: params[:commodity_type]) 
     elsif params[:commodity_name].present?
+      @name = params[:commodity_name]
       @commodities = Commodity.where(name: params[:commodity_name]) 
     else
       @commodities = Commodity.all
