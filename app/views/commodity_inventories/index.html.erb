@@ -75,9 +75,9 @@
                   <td><%= commodity.commodity_type_name %></td>
                   <td><%= commodity.name %></td>   
                   <% if !(@type == "服装类") %>              
-                    <td><%= inventory.warranty_period %>天</td>
+                    <td><%= inventory.warranty_period %>月</td>
                     <td><%= date.to_datetime.strftime("%Y年%m月%d日") %></td>
-                    <td><%= (inventory.warranty_period - (Time.now - date.to_datetime)/60/60/24).round %>天</td>
+                    <td><%= (inventory.warranty_period * 30 - (Time.now - date.to_datetime)/60/60/24).round %>天</td>
                   <% end %>
                   <td><%= commodity.unit %></td>
                   <td><%= commodity.standard %></td>

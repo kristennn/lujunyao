@@ -65,7 +65,7 @@ class Commodity < ApplicationRecord
         current_inventory = com_cur_inven.current_inventory + commodity_inventory.quantity
         com_cur_inven.update(commodity_id: commodity_inventory.commodity_id, produce_date: commodity_inventory.produce_date, current_inventory: current_inventory)
       else
-        message[:name] = "商品名称、计量单位、规格型号、商品类别和入库数量不得为空，请检查后再上传"
+        message[:name] = "商品名称、商品类别、计量单位、规格型号、销售价和入库数量不得为空，请检查后再上传"
       end
     end
     return message
