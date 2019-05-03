@@ -40,8 +40,10 @@
               <Cell><Data ss:Type="String"><%= commodity.name %></Data></Cell>
               <% if !(@export_commodities.first.commodity_type_name == "服装类") %>
                 <Cell><Data ss:Type="String"><%= inventory.warranty_period %>月</Data></Cell>
-                <Cell><Data ss:Type="String"><%= date.to_datetime.strftime("%Y年%m月%d日") %></Data></Cell>
-                <Cell><Data ss:Type="String"><%= (inventory.warranty_period * 30 - (Time.now - date.to_datetime)/60/60/24).round %>天</Data></Cell>
+                <Cell><Data ss:Type="String"><%= date %></Data></Cell>
+                <% now = Time.now.year.to_s + '-' + Time.now.month.to_s + '-' + Time.now.day.to_s %>
+                <% warranty_date = Date.parse(date) >> inventory.warranty_period %>
+                <Cell><Data ss:Type="String"><%= (warranty_date - Date.parse(now)).to_i %>天</Data></Cell>
               <% end %>
               <Cell><Data ss:Type="String"><%= commodity.unit %></Data></Cell>
               <Cell><Data ss:Type="String"><%= commodity.standard %></Data></Cell>
