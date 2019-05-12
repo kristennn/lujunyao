@@ -24,8 +24,8 @@
               <li><span class="glyphicon glyphicon-asterisk"></span>计量单位
               <%= f.select :unit, options_for_select(["箱", "盒", "个", "瓶"]), required: true %>
               </li>
-              <li><span class="glyphicon glyphicon-asterisk"></span>进货价
-              <%= f.text_field :purchase_price, required: true %>
+              <li>进货价
+              <%= f.text_field :purchase_price %>
               </li>  
             </ul>
           </div>

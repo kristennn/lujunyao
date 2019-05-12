@@ -61,7 +61,7 @@ class CommoditiesController < ApplicationController
       @commodity.update(commodity_params)
       redirect_to commodities_path,notice: "更新成功!"
     else 
-      @commodity.update(produt_params)
+      @commodity.update(commodity_params)
       redirect_to commodities_path,notice: "更新成功!"
     end 
 
